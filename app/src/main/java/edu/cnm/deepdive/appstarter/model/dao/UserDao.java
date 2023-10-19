@@ -163,14 +163,20 @@ public interface UserDao {
    * @return {@link Maybe} that can be executed (subscribed to) to obtain the {@link User} instance
    * of interest.
    */
+  /**
   @Query("SELECT * FROM user WHERE oauth_key = :oauthKey")
   Maybe<User> select(String oauthKey);
 
-  /**
    * Constructs and returns a {@link LiveData}-based query of all {@link User} instances, sorted by
    * display name. When observed (or when the contents of the {@code user} table are modified using
    * Room methods), the query is executed.
    */
+
+
+
+  @Query("SELECT * FROM user WHERE display_name LIKE :pattern")
+  LiveData<List<User>> selectByFragment(String pattern);
+
   @Query("SELECT * FROM user ORDER BY display_name ASC")
   LiveData<List<User>> select();
 

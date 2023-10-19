@@ -41,16 +41,16 @@ import javax.inject.Singleton;
 public class UserRepository {
 
   private final UserDao userDao;
-  private final GoogleSignInService signInService;
+  //private final GoogleSignInService signInService;
 
   /**
    * Initializes this instance by establishing a logical connection to the underlying database.
    */
 
   @Inject
-  UserRepository(UserDao userDao, GoogleSignInService signInService) {
+  UserRepository(UserDao userDao) {
     this.userDao = userDao;
-    this.signInService = signInService;
+
   }
 
   /**
@@ -58,10 +58,10 @@ public class UserRepository {
    * {@link User} instance for the current signed-in user from the database, and passes it to the
    * subscribing {@link io.reactivex.rxjava3.functions.Consumer}.
    */
-  public Single<User> getCurrent() {
+ /** public Single<User> getCurrent() {
     return getOrCreate().subscribeOn(Schedulers.io());
   }
-
+*/
   /**
    * Returns a {@link LiveData}-based query for the {@link User} entity instance identified by
    * {@code id}. The query executes when observed, or (if already being observed) whenever the
@@ -124,7 +124,7 @@ public class UserRepository {
    * @return {@link Completable} task that will delete {@code user} from the database when executed
    * (subscribed to).
    */
-  public Completable delete(User user) {
+ /** public Completable delete(User user) {
     return (
         (user.getId() == 0)
             ? Completable.complete()
@@ -134,7 +134,7 @@ public class UserRepository {
     )
         .subscribeOn(Schedulers.io());
   }
-
+/**
   private Single<User> getOrCreate() {
     return signInService
         .refresh()
@@ -151,7 +151,7 @@ public class UserRepository {
             )
         );
   }
-
+*/
   private Single<User> insert(User user) {
     user.setCreated(Instant.now());
     return userDao
@@ -168,7 +168,7 @@ public class UserRepository {
         .map((count) -> user);
   }
 
-  private Single<User> checkSafeDelete(User user) {
+ /** private Single<User> checkSafeDelete(User user) {
     return getOrCreate()
         .map((u) -> {
           if (u.equals(user)) {
@@ -176,6 +176,6 @@ public class UserRepository {
           }
           return u;
         });
-  }
+  }*/
 
 }

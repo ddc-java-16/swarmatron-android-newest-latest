@@ -29,5 +29,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android-app-starter-headless"
+rootProject.name = "swarmatron-android-newest-latest"
 include(":app")

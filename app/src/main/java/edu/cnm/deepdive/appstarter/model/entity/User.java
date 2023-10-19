@@ -31,7 +31,6 @@ import java.time.Instant;
 @Entity(
     tableName = "user",
     indices = {
-        @Index(value = "oauth_key", unique = true),
         @Index(value = "display_name", unique = true)
     }
 )
@@ -44,15 +43,12 @@ public class User {
   @NonNull
   private Instant created = Instant.MIN;
 
-  @ColumnInfo(name = "oauth_key")
-  @NonNull
-  private String oauthKey = "";
 
   @ColumnInfo(name = "display_name", collate = ColumnInfo.NOCASE)
   @NonNull
   private String displayName = "";
 
-  // TODO Define additional fields as appropriate.
+
 
   /**
    * Returns the auto-generated unique identifier of this instance.
@@ -92,20 +88,6 @@ public class User {
   /**
    * Returns the fixed OAuth2.0 identifier (aka <em>subject</em>) of this user.
    */
-  @NonNull
-  public String getOauthKey() {
-    return oauthKey;
-  }
-
-  /**
-   * Sets the fixed OAuth2.0 identifier (aka <em>subject</em>) of this user.
-   *
-   * @param oauthKey
-   */
-  @SuppressWarnings("JavadocDeclaration")
-  public void setOauthKey(@NonNull String oauthKey) {
-    this.oauthKey = oauthKey;
-  }
 
   /**
    * Returns unique display name of this user.
