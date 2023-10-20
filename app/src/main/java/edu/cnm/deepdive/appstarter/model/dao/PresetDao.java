@@ -20,8 +20,13 @@ public interface PresetDao {
   @Delete
 Single<Integer> delete(Preset preset);
 
-  @Query("SELECT * FROM preset ORDER BY preset_name ASC")
-  LiveData<List<Preset>> select();
+  @Query("SELECT * FROM preset WHERE preset_id = :presetid")
+LiveData<Preset> select(Long presetid);
 
+  @Query("SELECT * FROM preset ORDER BY preset_name ASC")
+  LiveData<List<Preset>> selectAllPresets();
+
+  @Query("SELECT * FROM preset WHERE user_id = :userid")
+LiveData<List<Preset>> selectUserPresets(Long userid);
 
 }

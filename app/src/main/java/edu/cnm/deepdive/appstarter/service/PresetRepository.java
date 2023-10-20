@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.appstarter.service;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import edu.cnm.deepdive.appstarter.model.dao.PresetDao;
 import edu.cnm.deepdive.appstarter.model.dao.UserDao;
 import edu.cnm.deepdive.appstarter.model.entity.Preset;
@@ -9,6 +10,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.time.Instant;
+import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -31,6 +33,15 @@ public class PresetRepository {
     return Single.fromSupplier(() -> new Preset()); // FIXME: 10/19/23 Replace with real code.
   }
 
+  public LiveData<Preset> get(long id) {
+    return presetDao.select(id);
+  }
+  public LiveData<List<Preset>> getByUser(long id) {
+    return presetDao.selectUserPresets(id);
+  }
+  public LiveData<List<Preset>> getAll() {
+    return presetDao.selectAllPresets();
+  }
 
   //save and update preset method
   public Single<Preset> save(Preset preset) {

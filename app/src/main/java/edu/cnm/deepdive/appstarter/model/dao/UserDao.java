@@ -32,7 +32,7 @@ import java.util.List;
  * {@code DELETE} operations are implemented as ReactiveX {@link Single} tasks, which execute on
  * subscription; some {@code SELECT} tasks are implemented using {@link LiveData} queries, which
  * execute on observation, or (if already being observed) on Room-based updates to the underlying
- * tables; one {@code SELECT} ({@link #select(String)}) is implemented as a ReactiveX {@link Maybe}
+ * tables; one {@code SELECT} ({@link #(String)}) is implemented as a ReactiveX {@link Maybe}
  * task, to allow for the appropriate handling of an empty query result.
  */
 @SuppressWarnings("unused")
