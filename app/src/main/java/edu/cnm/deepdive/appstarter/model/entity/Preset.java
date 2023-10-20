@@ -1,9 +1,12 @@
 package edu.cnm.deepdive.appstarter.model.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Index;
+import androidx.room.PrimaryKey;
+import java.time.Instant;
 
 
 @Entity(
@@ -18,7 +21,9 @@ import androidx.room.Index;
 
 )
 public class Preset {
-
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "preset_id")
+    private long id;
     @ColumnInfo(name = "user_id")
     private long userId;
     @ColumnInfo(name = "preset_name")
@@ -30,6 +35,25 @@ public class Preset {
 
     @ColumnInfo(name = "waveform_selection")
     private int waveFormSelection;
+    @NonNull
+    private Instant created = Instant.MIN;
+
+    @NonNull
+    public Instant getCreated() {
+        return created;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setCreated(@NonNull Instant created) {
+        this.created = created;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getUserId() {
         return userId;

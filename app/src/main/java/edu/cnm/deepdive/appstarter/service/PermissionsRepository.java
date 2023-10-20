@@ -27,7 +27,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import dagger.hilt.android.qualifiers.ApplicationContext;
-import edu.cnm.deepdive.appstarter.NavigationGraphDirections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,8 +77,7 @@ public class PermissionsRepository {
    * @param activity      {@link Activity} initiating the flow and providing the
    *                      {@link Activity#onRequestPermissionsResult(int, String[], int[])}
    *                      callback.
-   * @param navController {@link NavController} used if/when navigating to the {@link
-   *                      edu.cnm.deepdive.appstarter.controller.PermissionsExplanationFragment}.
+   * @param navController .
    */
   public void startPermissionsCheck(Activity activity, NavController navController) {
     try {
@@ -91,9 +89,9 @@ public class PermissionsRepository {
           permissionsNeeded, permissionsGranted, permissionsToRequest, permissionsToExplain);
       permissions.postValue(permissionsGranted);
       if (!permissionsToExplain.isEmpty()) {
-        navController.navigate(NavigationGraphDirections.explainPermissions(
+       /* navController.navigate(NavigationGraphDirections.explainPermissions(
             permissionsToExplain.toArray(new String[0]),
-            permissionsToRequest.toArray(new String[0])));
+            permissionsToRequest.toArray(new String[0])));*/
       } else if (!permissionsToRequest.isEmpty()) {
         requestPermissions(activity, permissionsToRequest.toArray(new String[0]));
       }

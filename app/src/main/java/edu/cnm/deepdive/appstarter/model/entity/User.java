@@ -107,8 +107,6 @@ public class User {
     this.displayName = displayName;
   }
 
-  // TODO Define additional getters and setters. These must be defined for any additional fields
-  //  mapped to database columns.
 
   /**
    * Computes and returns the {@code int}-valued hash code of this instance. Currently, this

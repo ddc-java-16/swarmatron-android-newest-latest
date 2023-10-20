@@ -7,13 +7,14 @@ import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import dagger.hilt.components.SingletonComponent;
+import edu.cnm.deepdive.appstarter.model.dao.PresetDao;
 import edu.cnm.deepdive.appstarter.model.dao.UserDao;
-import edu.cnm.deepdive.appstarter.service.LocalDatabase;
+import edu.cnm.deepdive.appstarter.service.SwarmatronDatabase;
 import javax.inject.Singleton;
 
 /**
  * Uses Dagger {@link Provides @Provides}-annotated methods to satisfy dependencies on concrete
- * implementations of {@link LocalDatabase} and {@link UserDao}.
+ * implementations of {@link SwarmatronDatabase} and {@link UserDao}.
  */
 @InstallIn(SingletonComponent.class)
 @Module
@@ -25,18 +26,21 @@ public final class DatabaseModule {
 
   @Provides
   @Singleton
-  LocalDatabase provideLocalDatabase(@ApplicationContext Context context) {
+  SwarmatronDatabase provideLocalDatabase(@ApplicationContext Context context) {
     return Room
-        .databaseBuilder(context, LocalDatabase.class, LocalDatabase.NAME)
-        .addCallback(new LocalDatabase.Callback())
+        .databaseBuilder(context, SwarmatronDatabase.class, SwarmatronDatabase.NAME)
+        .addCallback(new SwarmatronDatabase.Callback())
         .build();
   }
 
   @Provides
-  UserDao provideUserDao(LocalDatabase database) {
+  @Singleton
+  UserDao provideUserDao(SwarmatronDatabase database) {
     return database.getUserDao();
   }
+@Provides
+@Singleton
+  PresetDao providePresetDao(SwarmatronDatabase database) {return database.getPresetDao();}
 
-  // TODO Add additional methods so satisfy dependencies on other DAO interface implementations.
 
 }

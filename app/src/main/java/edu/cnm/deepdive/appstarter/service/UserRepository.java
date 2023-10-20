@@ -26,13 +26,12 @@ import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.time.Instant;
 import java.util.List;
-import java.util.Objects;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
  * Provides high-level operations on a repository of {@link User} instances, backed by a SQLite
- * database, in turn accessed via {@link LocalDatabase}. This class has no mutable state, and its
+ * database, in turn accessed via {@link SwarmatronDatabase}. This class has no mutable state, and its
  * methods are thread-safe; however, mutating operations (involving {@code INSERT}, {@code UPDATE},
  * or {@code DELETE} on the underlying database) attempted simultaneously could block or fail.
  */
@@ -58,10 +57,11 @@ public class UserRepository {
    * {@link User} instance for the current signed-in user from the database, and passes it to the
    * subscribing {@link io.reactivex.rxjava3.functions.Consumer}.
    */
- /** public Single<User> getCurrent() {
-    return getOrCreate().subscribeOn(Schedulers.io());
+  public Single<User> getCurrent() {
+   // return getOrCreate().subscribeOn(Schedulers.io());
+    return Single.fromSupplier(() -> new User()); // FIXME: 10/19/23 Replace with real code.
   }
-*/
+
   /**
    * Returns a {@link LiveData}-based query for the {@link User} entity instance identified by
    * {@code id}. The query executes when observed, or (if already being observed) whenever the
@@ -124,16 +124,16 @@ public class UserRepository {
    * @return {@link Completable} task that will delete {@code user} from the database when executed
    * (subscribed to).
    */
- /** public Completable delete(User user) {
+  public Completable delete(User user) {
     return (
         (user.getId() == 0)
             ? Completable.complete()
-            : checkSafeDelete(user)
-                .flatMap(userDao::delete)
+            : userDao.delete(user)
                 .ignoreElement()
     )
         .subscribeOn(Schedulers.io());
   }
+
 /**
   private Single<User> getOrCreate() {
     return signInService

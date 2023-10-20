@@ -1,20 +1,27 @@
 package edu.cnm.deepdive.appstarter.model.dao;
 
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 import edu.cnm.deepdive.appstarter.model.entity.Preset;
-import edu.cnm.deepdive.appstarter.model.entity.User;
 import io.reactivex.rxjava3.core.Single;
-
-public class PresetDao {
+import java.util.List;
+@Dao
+public interface PresetDao {
   @Insert
-  Single<int> insert(Preset preset);
+  Single<Long> insert(Preset preset);
+
+  @Update
+  Single<Integer> update(Preset preset);
 
   @Delete
+Single<Integer> delete(Preset preset);
 
-
-  @Query()
+  @Query("SELECT * FROM preset ORDER BY preset_name ASC")
+  LiveData<List<Preset>> select();
 
 
 }

@@ -22,9 +22,11 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import edu.cnm.deepdive.appstarter.model.dao.PresetDao;
 import edu.cnm.deepdive.appstarter.model.dao.UserDao;
+import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.model.entity.User;
-import edu.cnm.deepdive.appstarter.service.LocalDatabase.Converters;
+import edu.cnm.deepdive.appstarter.service.SwarmatronDatabase.Converters;
 import java.time.Instant;
 
 /**
@@ -32,16 +34,16 @@ import java.time.Instant;
  * using data-access object (DAO) instances obtained from the singleton instance of this class.
  */
 @Database(
-    entities = {User.class},
+    entities = {User.class, Preset.class},
     version = 1
 )
 @TypeConverters({Converters.class})
-public abstract class LocalDatabase extends RoomDatabase { // TODO Change to more app-specific name.
+public abstract class SwarmatronDatabase extends RoomDatabase {
 
   /**  Name of SQLite database file. */
-  public static final String NAME = "starter"; // TODO Change to more app-specific value.
+  public static final String NAME = "swarmatron";
 
-  LocalDatabase() {
+  SwarmatronDatabase() {
     // Package-private constructor to avoid automatic HTML generation for Javadocs.
   }
 
@@ -50,9 +52,7 @@ public abstract class LocalDatabase extends RoomDatabase { // TODO Change to mor
    * instances of the {@link User} entity class.
    */
   public abstract UserDao getUserDao();
-
-  // TODO Declare abstract accessors (aka getters) for other DAOs used in this project.
-
+  public abstract PresetDao getPresetDao();
   /**
    * Defines converters for otherwise unsupported types (initially, just {@link Instant}) to one of
    * those supported by Room/SQLite.
@@ -98,10 +98,8 @@ public abstract class LocalDatabase extends RoomDatabase { // TODO Change to mor
     @Override
     public void onCreate(@NonNull SupportSQLiteDatabase db) {
       super.onCreate(db);
-      // TODO Obtain DAO instances from database, and use them to perform any required preloads, e.g.
-      //  LocalDatabase database = LocalDatabase.getInstance();
-      //  etc.
     }
+
 
   }
 
