@@ -20,6 +20,6 @@ public class Swarm {
   public void drone() {
     //apply the dronePitch as parameter to a single oscillator, to mimic sitar over pedal tone.
     //apply centerPitch as parameter from which he individual oscillators will derive their pitches
-    //invoke each oscillators sound method with their unique field values, but sharing a common bitch,
+    //invoke each oscillators sound method with their unique field values, but sharing a common pitch,
   }
 }

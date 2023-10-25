@@ -35,6 +35,7 @@ public class Preset {
 
     @ColumnInfo(name = "waveform_selection")
     private int waveFormSelection;
+
     @NonNull
     private Instant created = Instant.MIN;
 

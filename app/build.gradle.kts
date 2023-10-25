@@ -137,10 +137,13 @@ dependencies {
     // Stetho (inspection) dependency
     implementation(libs.stetho)
 
+    //Jsyn Synthesis Dependency
+    implementation(libs.jsyn)
     // Libraries for JVM-based testing.
     testImplementation(libs.junit.api)
     testImplementation(libs.junit.params)
     testRuntimeOnly(libs.junit.engine)
+
 
 
 
