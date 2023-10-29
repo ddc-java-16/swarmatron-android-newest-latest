@@ -12,9 +12,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class Oscillator {
 
+  ///I have an idea to convert this class into anan enum since there will only be 9 instances.
+  ////that way each Instance can have a unique int identifier that will
+  ///be used to retrieve its pitch from the array of spreadPitches.
+
 UnitOscillator oscillator;
 
   private int pitch;
+  private int spreadposition;
 
 Oscillator(int waveform) {
   switch (waveform) {
@@ -26,10 +31,9 @@ Oscillator(int waveform) {
       oscillator = new TriangleOscillator();
     case 4:
       oscillator = new SquareOscillator();
-
-
   }
-  pitch = Swarm.getCenterPitch();
+  pitch = Swarmatron.liveSwarm.spreadPitches[spreadposition];
+
 }
 
 
@@ -40,14 +44,14 @@ Oscillator(int waveform) {
   // private Filter filter;
   // private Drive drive;
 
-  public void oscillate(Synthesizer synth) {
+  public void oscillate(UnitOscillator oscillator) {
     //apply fields as parameters to Jsyn Synthesiser instance.
     //perhaps, if possible, use the Waveform field as a way to select which class
     //to instantiate from Jsyn, SquareOscillator, SineOscillator, SawOscillator
-    synth.start();
+   // synth.start();
 
     //until user releases input via UI
-    synth.stop();
+    //synth.stop();
   }
 
   @Override
@@ -57,14 +61,18 @@ Oscillator(int waveform) {
 
   @Override
   public boolean equals(@Nullable @org.jetbrains.annotations.Nullable Object obj) {
-    return super.equals(obj);
+  UnitOscillator targetOscillator = (UnitOscillator) obj;
+
+    if (this.getClass().equals(targetOscillator.getClass())) {
+      return true;
+    } else {return false;
+
   }
 
-  @NonNull
 
+}
   @Override
   public String toString() {
-    return super.toString();
+    return "Oscillator " + spreadposition ;
   }
-}
 }

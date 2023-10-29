@@ -2,26 +2,25 @@ package edu.cnm.deepdive.appstarter.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.jsyn.Synthesizer;
-import java.util.Set;
 import java.util.logging.Filter;
-import org.jetbrains.annotations.NotNull;
 
 public class Swarm {
   private String swarmName;
   private Filter busFilter;
   private int centerPitch;
-  private int[] spreadPitches;
+  int[] spreadPitches;
 
   private int dronePitch;
   private Oscillator[] swarmoscillators = new Oscillator[9]; ///  OR LIST
 
   Swarm(){
     swarmName = "liveswarm";
-    centerPitch = setCenterPitch();
-    busFilter =
+   setCenterPitch();
+    busFilter =  getBusFilter();
+    spreadPitches = setSpread();
+    dronePitch = spreadPitches[9];
 
-
+// FIXME: 10/29/23 Must retrieve dat from repository. replace variables with setter methods
 
   }
   public void drone() {
@@ -55,19 +54,26 @@ public class Swarm {
 
 
 
-  public void setCenterPitch(int centerPitch) {
-    this.centerPitch = centerPitch;
+  public void setCenterPitch() {
+    this.centerPitch = 0;
+    //Will be input from user gesture
+
   }
 
   public int[] setSpread() {
+    int[] processedpitches = new int[9];
     // take center pitch and base on value of spread knob
     //calculate the appropriate individual pitches for
     //each indiviidual oscillator and return as array for
     //access
-
+return processedpitches;
   }
 
+  public Filter getBusFilter() {
+    return busFilter;
+  }
 
-
-
+  public void setBusFilter(Filter busFilter) {
+    this.busFilter = busFilter;
+  }
 }
