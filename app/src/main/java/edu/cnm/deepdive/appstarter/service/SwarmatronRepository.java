@@ -48,45 +48,36 @@ swarm.setCenterPitch(newPitch);
    }
      swarm.setSpreadPitches(pitchspectrum);
      liveDataSwarm.postValue(swarm);
-
-    //Write algorithm that takes parameter spreadrange
-    //and returns an array of 8 int pitch values that are spread equidistantly between the
-    //extremities of the spread range and the center pitch frequency, than initialize the
-    ///live swarm's spreadpitches array.
-
   }
 
 
 
   public void changeDronePitch(int newPitch) {
 
-// mutates the fefault drone pitch value from null to
-    //a value retrieved from a MutableLiveData?
     liveDataSwarm.getValue().setDronePitch(newPitch);
   }
 
   public void changeOscillatorWaveform(int wavformselection, int oscillatorSelection) {
   Swarm swarm = liveDataSwarm.getValue();
-Oscillator chosen = new Oscillator();
+UnitOscillator chosen = chooseWaveform(wavformselection);
 swarm.setSwarmoscillator(chosen, oscillatorSelection);
 
 
   }
-
+/*
   public UnitOscillator chooseWaveform(int waveform) {
-
+UnitOscillator result;
     switch (waveform) {
       case 1:
-        return new SineOscillator();
+         result = new SineOscillator();
       case 2:
-        return new SawtoothOscillator();
+        result = new SawtoothOscillator();
       case 3:
-        return new TriangleOscillator();
+        result = new TriangleOscillator();
       case 4:
-        return new SquareOscillator();
+        result = new SquareOscillator();
     }
-
-
+return result;
   }
 
   public void turnFilterKnob() {
@@ -96,6 +87,6 @@ swarm.setSwarmoscillator(chosen, oscillatorSelection);
   public void chooseSwarmDisplayName(String chosenname) {
     liveSwarm.setSwarmName(chosenname);
     }
-
+*/
 
 }

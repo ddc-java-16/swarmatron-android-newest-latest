@@ -51,10 +51,9 @@ private int pitch;
     return "Oscillator " + spreadposition ;
   }
 
-  @Override
-  public void generate(int i, int i1) {
 
-  }
+
+
 
   public UnitOscillator getOscillator() {
     return oscillator;
