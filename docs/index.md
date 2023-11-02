@@ -5,8 +5,6 @@ menu: Overview
 order: 0
 ---
 
-{% include ddc-abbreviations.md %}
-
 ## Summary
 
 This app is a digital replica of the effect produced by the Swarmatron, a hardware instrument designed by the
@@ -16,20 +14,13 @@ oscillate, recreating the sound of a swarm of bees.
 ## Intended users & user stories
 {: menu="Users" }
 
-Write a bullet list here, including at least 2 different types of intended users. Make it reasonably specific; simply saying "Anyone who likes games" (for example) is not sufficiently specific.
-
-For each type of intended user, include at least 1 _user story_. A user story is usually just 1 simple sentence (no more than 2 sentences), in the voice of the intended user, stating a specific task that the user performs using the app, and the benefit that will be obtained. The simplest user stories take the form 
-
+* Musicians
+* Folks who like to make musical sounds for fun
 > As a musician, I want to recreate the effect produces by these rare machines at home, for use in my own music.
 
-Please avoid writing too much for the user story. In particular, if the way the user story is written makes it difficult to see the _who_, _what_, and _why_, then you probably need to re-write it more directly. (On the other hand, a user story should not simply be a re-statement of the intended user description.)
-
-Here is one (silly) example of an intended user, along with a user story. Please note not only the conceptual structure, but the Markdown syntax used.
-
-* People who like to use randomness in their decision making.
 
     I am interested in this app because it produces a soothing tone, much like a singing bowl or handpan, which helps with meditation and can also
-* be a pleasant sound that can be easily manipulated by a non-musician.
+be a pleasant sound that can be easily manipulated by a non-musician.
 
 ## Functionality
 
