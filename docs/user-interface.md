@@ -4,7 +4,7 @@ description: "Entity-relationship diagram and DDL."
 menu: UI
 order: 10
 wireframe:
-  image: img/wireframe.svg
+  image: img/SwarmatronUI.svg
   pdf: pdf/SwarmatronUI.pdf
 ---
 
