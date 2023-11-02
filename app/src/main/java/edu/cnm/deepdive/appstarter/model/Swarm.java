@@ -2,27 +2,20 @@ package edu.cnm.deepdive.appstarter.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.jsyn.unitgen.UnitOscillator;
 import java.util.logging.Filter;
 
 public class Swarm {
   private String swarmName;
-  private Filter busFilter;
+  private int busFilter;
   private int centerPitch;
-  int[] spreadPitches;
+  int[] spreadPitches = new int[8];
 
   private int dronePitch;
-  private Oscillator[] swarmoscillators = new Oscillator[9]; ///  OR LIST
+  private Oscillator[] swarmoscillators = new Oscillator[8];
+  private UnitOscillator droneOscillator;
 
-  Swarm(){
-    swarmName = "liveswarm";
-   setCenterPitch();
-    busFilter =  getBusFilter();
-    spreadPitches = setSpread();
-    dronePitch = spreadPitches[9];
 
-// FIXME: 10/29/23 Must retrieve dat from repository. replace variables with setter methods
-
-  }
   public void drone() {
     //apply the dronePitch as parameter to a single oscillator, to mimic sitar over pedal tone.
     //apply centerPitch as parameter from which he individual oscillators will derive their pitches
@@ -54,26 +47,66 @@ public class Swarm {
 
 
 
-  public void setCenterPitch() {
-    this.centerPitch = 0;
-    //Will be input from user gesture
 
-  }
-
-  public int[] setSpread() {
-    int[] processedpitches = new int[9];
-    // take center pitch and base on value of spread knob
-    //calculate the appropriate individual pitches for
-    //each indiviidual oscillator and return as array for
-    //access
-return processedpitches;
-  }
-
-  public Filter getBusFilter() {
+  public int getBusFilter() {
     return busFilter;
   }
 
-  public void setBusFilter(Filter busFilter) {
+  public void setBusFilter(int busFilter) {
     this.busFilter = busFilter;
+  }
+
+  public String getSwarmName() {
+    return swarmName;
+  }
+
+  public void setSwarmName(String swarmName) {
+    this.swarmName = swarmName;
+  }
+
+  public int getCenterPitch() {
+    return centerPitch;
+  }
+
+  public void setCenterPitch(int centerPitch) {
+    this.centerPitch = centerPitch;
+  }
+
+  public int[] getSpreadPitches() {
+    return spreadPitches;
+  }
+
+  public void setSpreadPitches(int[] spreadPitches) {
+    this.spreadPitches = spreadPitches;
+  }
+
+  public int getDronePitch() {
+    return dronePitch;
+  }
+
+  public void setDronePitch(int dronePitch) {
+    this.dronePitch = dronePitch;
+  }
+
+  public Oscillator[] getSwarmoscillators() {
+    return swarmoscillators;
+  }
+
+  public void setSwarmoscillators(Oscillator[] swarmoscillators) {
+    this.swarmoscillators = swarmoscillators;
+  }
+
+
+  public void setSwarmoscillator(UnitOscillator oscillator, int oscillatorselection) {
+    Oscillator chosenoscillator = swarmoscillators[oscillatorselection];
+    chosenoscillator.setOscillator(oscillator);
+
+  }
+  public UnitOscillator getDroneOscillator() {
+    return droneOscillator;
+  }
+
+  public void setDroneOscillator(UnitOscillator droneOscillator) {
+    this.droneOscillator = droneOscillator;
   }
 }

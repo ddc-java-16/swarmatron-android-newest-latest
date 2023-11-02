@@ -9,7 +9,9 @@ order: 0
 
 ## Summary
 
-Replace this paragraph with one or more paragraphs summarizing the purpose and operation of the Android app you propose to develop in this project.
+This app is a digital replica of the effect produced by the Swarmatron, a hardware instrument designed by the
+Dewan Brothers. It produces a cluster of tones which can be finely seperated from eachother as they
+oscillate, recreating the sound of a swarm of bees.
 
 ## Intended users & user stories
 {: menu="Users" }
@@ -18,7 +20,7 @@ Write a bullet list here, including at least 2 different types of intended users
 
 For each type of intended user, include at least 1 _user story_. A user story is usually just 1 simple sentence (no more than 2 sentences), in the voice of the intended user, stating a specific task that the user performs using the app, and the benefit that will be obtained. The simplest user stories take the form 
 
-> As a <type of intended user (_who_)> I want to <use of specific feature or functionality (_what_)> so that <benefit (_why_).
+> As a musician, I want to recreate the effect produces by these rare machines at home, for use in my own music.
 
 Please avoid writing too much for the user story. In particular, if the way the user story is written makes it difficult to see the _who_, _what_, and _why_, then you probably need to re-write it more directly. (On the other hand, a user story should not simply be a re-statement of the intended user description.)
 
@@ -26,30 +28,40 @@ Here is one (silly) example of an intended user, along with a user story. Please
 
 * People who like to use randomness in their decision making.
 
-    > As someone who enjoys randomness in my life, I need an app that flips a virtual coin or rolls one or more virtual dice, so that I can base my decisions on randomness without having to carry coins or dice in my pockets.
+    I am interested in this app because it produces a soothing tone, much like a singing bowl or handpan, which helps with meditation and can also
+* be a pleasant sound that can be easily manipulated by a non-musician.
 
 ## Functionality
 
-List (using a bullet list---or ordered list, if order is relevant) the key functional aspects that will be provided by the app---i.e. tell us what the user will be able to do using the app. This should not simply be a re-statement of the [summary](#summary), but should instead provide a more specific articulation of the functionality and user experience. 
+The Swarmatron can be played by interacting with its two control ribbons.
+The first can be dragged right or left to raise or lower the swarm pitch.
+The second can be dragged right or left to choose a pedal tone, which persists after the user has let go of the ribbon.
+Combining a steady pedal tone with a melodic line on the Swarm produces a hypnotic texture reminiscent of the sitar or psychedelic music.
+The pitches that comprise the swarm tone can be spread apart from eachother using a virtual knob.
+The User can also control the waveform of the oscillators that comprise the swarm.
 
 ## Persistent data
 {: menu="Persistence" }
-
-Using a bullet list, list what content will be stored on the Android device. This should include any information that users of your app would expect to be maintained (i.e. without connection to a server) across multiple sessions of use.
-
-For example, this starter app already includes the necessary data model elements and data-access code to store & retrieve the following 
 
 * User
     * Display name
     * OAuth2.0 identifier
     * Timestamp of first login to the app
-    
+  *Preset
+    * Preset Name
+    * Waveforms of oscillators
+    * Spread knob position
+    * Filter position
+    * Volume position
+    * 
 ## Device/external services
 {: menu="Services" }
 
-If the client component will need to access special services of the device (e.g. sensors, contacts, messaging), list them here using a bullet list. Also, if the client component will need to access already-existing external services (e.g. real-time weather data, Open Movie Database, Open Trivia Database), those should also be listed here; any such references to external services should include links to the main page or API description page for the service.
+This will use the device audio output.
 
 ## Stretch goals and possible enhancements 
 {: menu="Stretch goals" }
 
-If you can identify functional elements of the software that you think might not be achievable in the scope of the project, but which would nonetheless add significant value if you were able to include them, list them here. For now, we recommend listing them in order of complexity/amount of work, from the least to the most.
+*Overdrive on the master bus
+*Reverb
+*Oscilloscope
