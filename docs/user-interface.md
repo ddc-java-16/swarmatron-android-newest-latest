@@ -5,7 +5,7 @@ menu: UI
 order: 10
 wireframe:
   image: img/SwarmatronUI.svg
-  pdf: pdf/SwarmatronUI.pdf
+  
 ---
 
 {% include ddc-abbreviations.md %}
