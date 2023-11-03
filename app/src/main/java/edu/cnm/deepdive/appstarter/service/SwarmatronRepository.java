@@ -64,29 +64,34 @@ swarm.setSwarmoscillator(chosen, oscillatorSelection);
 
 
   }
-/*
+
   public UnitOscillator chooseWaveform(int waveform) {
 UnitOscillator result;
     switch (waveform) {
       case 1:
-         result = new SineOscillator();
+         return new SineOscillator();
       case 2:
-        result = new SawtoothOscillator();
+        return new SawtoothOscillator();
       case 3:
-        result = new TriangleOscillator();
+        return new TriangleOscillator();
       case 4:
-        result = new SquareOscillator();
+        return new SquareOscillator();
     }
-return result;
+return null;
   }
 
-  public void turnFilterKnob() {
-    liveSwarm.setBusFilter(livebusfilter.getValue());
+  public void turnFilterKnob(int busfilter) {
+  Swarm swarm = liveDataSwarm.getValue();
+    swarm.setBusFilter(busfilter);
+    liveDataSwarm.postValue(swarm);
+
   }
 
   public void chooseSwarmDisplayName(String chosenname) {
-    liveSwarm.setSwarmName(chosenname);
+    Swarm swarm = liveDataSwarm.getValue();
+    swarm.setSwarmName(chosenname);
+    liveDataSwarm.postValue(swarm);
     }
-*/
+
 
 }
