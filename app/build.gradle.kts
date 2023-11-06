@@ -56,6 +56,12 @@ android {
             }
         }
 
+
+        roomDdl {
+            source.set(project.file("$projectDir/schemas/edu.cnm.deepdive.appstarter.service.SwarmatronDatabase/1.json"))
+            destination.set(project.file("$projectDir/../docs/sql/ddl.sql"))
+        }
+
     }
 
     buildTypes {
@@ -136,6 +142,11 @@ dependencies {
 
     // Stetho (inspection) dependency
     implementation(libs.stetho)
+
+    //Android Gif Animation Dependency
+
+
+
 
     //Jsyn Synthesis Dependency
     implementation(libs.jsyn)
