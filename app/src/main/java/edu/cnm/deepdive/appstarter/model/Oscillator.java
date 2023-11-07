@@ -7,6 +7,7 @@ import com.jsyn.unitgen.SawtoothOscillator;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.SquareOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
+import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.UnitOscillator;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,17 +18,9 @@ public class Oscillator{
   ///be used to retrieve its pitch from the array of spreadPitches.
 
 UnitOscillator oscillator;
+UnitGenerator generator;
 private int pitch;
   private int spreadposition;
-  public void oscillate(UnitOscillator oscillator) {
-    //apply fields as parameters to Jsyn Synthesiser instance.
-    //perhaps, if possible, use the Waveform field as a way to select which class
-    //to instantiate from Jsyn, SquareOscillator, SineOscillator, SawOscillator
-   // synth.start();
-
-    //until user releases input via UI
-    //synth.stop();
-  }
 
   @Override
   public int hashCode() {

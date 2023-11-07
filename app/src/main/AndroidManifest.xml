@@ -22,16 +22,19 @@
   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
   <application
     android:allowBackup="false"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
-    android:name=".AppStarterApplication"
+    android:name=".SwarmatronApplication"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="AllowBackup,DataExtractionRules">
+    <activity android:name="SwarmatronApplication"
+      android:screenOrientation="landscape"/>
   </application>
 
 

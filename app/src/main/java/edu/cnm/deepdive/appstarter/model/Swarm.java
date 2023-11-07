@@ -1,25 +1,65 @@
 package edu.cnm.deepdive.appstarter.model;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import com.jsyn.Synthesizer;
+import com.jsyn.devices.AudioDeviceManager;
+import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.UnitOscillator;
-import java.util.logging.Filter;
 
 public class Swarm {
   private String swarmName;
   private int busFilter;
   private int centerPitch;
   int[] spreadPitches = new int[8];
+  AudioDeviceManager manager;
 
   private int dronePitch;
   private Oscillator[] swarmoscillators = new Oscillator[8];
   private UnitOscillator droneOscillator;
 
+  private final LineOut mLineOut = new LineOut(); // stereo output
 
+  public Swarm() {
+
+    // Create the unit generators and add them to the synthesizer.
+   /* swarmatron.add(mAmpJack = new LinearRamp());
+    swarmatron.add(swarmoscillators[1].oscillator);
+    swarmatron.add(swarmoscillators[2].oscillator);
+    ETC.
+    swarmatron.add(mLineOut = new LineOut()); */
+
+    // Split level setting to both oscillators.
+   // mAmpJack.output.connect(mOsc1.amplitude);
+  //  mAmpJack.output.connect(mOsc2.amplitude);
+  //  mAmpJack.time.set(0.1); // duration of ramp//
+
+    // Connect an oscillator to each channel of the LineOut.
+    swarmoscillators[0].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[1].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[2].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[3].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[4].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[5].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[6].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[7].oscillator.output.connect(0, mLineOut.input, 0);
+    droneOscillator.output.connect(0, mLineOut.input, 0);
+  }
+
+
+  public void start() {
+    swarmoscillators[0].oscillator.start();
+    swarmoscillators[1].oscillator.start();
+    swarmoscillators[2].oscillator.start();
+    swarmoscillators[3].oscillator.start();
+    swarmoscillators[4].oscillator.start();
+    swarmoscillators[5].oscillator.start();
+    swarmoscillators[6].oscillator.start();
+    swarmoscillators[7].oscillator.start();
+  }
   public void drone() {
-    //apply the dronePitch as parameter to a single oscillator, to mimic sitar over pedal tone.
-    //apply centerPitch as parameter from which he individual oscillators will derive their pitches
-    //invoke each oscillators sound method with their unique field values, but sharing a common pitch,
+    droneOscillator.start();
   }
 
   @Override
