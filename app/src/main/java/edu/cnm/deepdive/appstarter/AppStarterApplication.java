@@ -16,9 +16,7 @@
 package edu.cnm.deepdive.appstarter;
 
 import android.app.Application;
-import com.facebook.stetho.Stetho;
 import dagger.hilt.android.HiltAndroidApp;
-import edu.cnm.deepdive.appstarter.model.Swarmatron;
 
 /**
  * Initializes (in the {@link #onCreate()} method) application-level resources that cannot be
@@ -26,13 +24,12 @@ import edu.cnm.deepdive.appstarter.model.Swarmatron;
  * {@code AndroidManifest.xml}, or it will not be loaded and used by the Android system.
  */
 @HiltAndroidApp
-public class SwarmatronApplication extends Application {
+public class AppStarterApplication extends Application {
 
   @Override
   public void onCreate() {
     super.onCreate();
-    Stetho.initializeWithDefaults(this);
-Swarmatron.liveSwarm.start();
   }
+
 
 }
