@@ -9,18 +9,16 @@ import com.jsyn.unitgen.SquareOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.UnitOscillator;
-import org.jetbrains.annotations.NotNull;
+
 
 public class Oscillator{
-
-  ///I have an idea to convert this class into anan enum since there will only be 9 instances.
-  ////that way each Instance can have a unique int identifier that will
-  ///be used to retrieve its pitch from the array of spreadPitches.
-
-UnitOscillator oscillator;
-UnitGenerator generator;
+public UnitOscillator oscillator;
+Oscillator() {
+  oscillator = new SineOscillator();
+}
 private int pitch;
   private int spreadposition;
+
 
   @Override
   public int hashCode() {
