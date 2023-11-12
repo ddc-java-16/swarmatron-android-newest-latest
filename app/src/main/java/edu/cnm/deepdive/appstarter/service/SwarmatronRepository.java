@@ -1,18 +1,16 @@
 package edu.cnm.deepdive.appstarter.service;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.jsyn.unitgen.SawtoothOscillator;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.SquareOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitOscillator;
-import edu.cnm.deepdive.appstarter.model.Oscillator;
+
 import edu.cnm.deepdive.appstarter.model.Swarm;
 
 public class SwarmatronRepository {
   private final MutableLiveData<Swarm> liveDataSwarm;
-  private MutableLiveData<Integer> livebusfilter;
 
 SwarmatronRepository() {
   liveDataSwarm = new MutableLiveData<>();
@@ -21,23 +19,23 @@ SwarmatronRepository() {
     liveDataSwarm.postValue(new Swarm());
   }
 
+private edu.cnm.deepdive.appstarter.model.Swarm swarm;
+  public void setCenterPitch(float newPitch) {
 
-  public void setCenterPitch(int newPitch) {
 Swarm swarm = liveDataSwarm.getValue();
 swarm.setCenterPitch(newPitch);
-// mutates the fefault center pitch value from null to
-    //a value retrieved from a MutableLiveData?
+
 
     liveDataSwarm.postValue(swarm);
   }
 
-  public void setSpread(int spreadrange) {
+  public void setSpread(float spreadrange) {
     Swarm swarm = liveDataSwarm.getValue();
-    int centerpitch = liveDataSwarm.getValue().getCenterPitch();
-    int pitchinterval = spreadrange/8;
-   int[] pitchspectrum = new int[8];
+    float centerpitch = liveDataSwarm.getValue().getCenterPitch();
+    float pitchinterval = spreadrange/8;
+   float[] pitchspectrum = new float[8];
    int relativechange = -4;
-   for (int position: pitchspectrum) {
+   for (float position: pitchspectrum) {
      if(relativechange != 0) {
        position = centerpitch + pitchinterval * relativechange;
      } else {

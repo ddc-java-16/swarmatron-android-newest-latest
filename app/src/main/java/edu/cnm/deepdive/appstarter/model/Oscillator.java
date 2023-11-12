@@ -13,13 +13,13 @@ import com.jsyn.unitgen.UnitOscillator;
 
 public class Oscillator{
 public UnitOscillator oscillator;
-Oscillator() {
+
+private float frequency;
+
+Oscillator(){
   oscillator = new SineOscillator();
+
 }
-private int pitch;
-  private int spreadposition;
-
-
   @Override
   public int hashCode() {
     return super.hashCode();
@@ -39,12 +39,8 @@ private int pitch;
 }
   @Override
   public String toString() {
-    return "Oscillator " + spreadposition ;
+    return "Oscillator " ;
   }
-
-
-
-
 
   public UnitOscillator getOscillator() {
     return oscillator;
