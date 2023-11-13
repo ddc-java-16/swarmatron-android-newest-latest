@@ -2,6 +2,7 @@ package edu.cnm.deepdive.appstarter.model;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import edu.cnm.deepdive.appstarter.service.SwarmatronRepository;
 import java.util.Date;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,7 @@ public class Preset {
   private Date created;
 
   Preset() {
-    savedSwarm = Swarmatron.getLiveSwarm();
+    savedSwarm = new Swarm();
     //presetName = //// input from user
     created = new Date();
   }

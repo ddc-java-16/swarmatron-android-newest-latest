@@ -4,37 +4,44 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.slider.Slider.OnChangeListener;
-import com.google.android.material.slider.Slider.OnSliderTouchListener;
 import edu.cnm.deepdive.appstarter.R;
 import edu.cnm.deepdive.appstarter.model.Swarm;
 import edu.cnm.deepdive.appstarter.service.SwarmatronRepository;
-import edu.cnm.deepdive.appstarter.viewmodel.SwarmatronViewModel;
 import org.jetbrains.annotations.NotNull;
 
 
 public class MainActivity extends AppCompatActivity {
+  SwarmatronRepository repository;
+  OnChangeListener spreadlistener = new OnChangeListener() {
+    @Override
+    public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {
+      repository.spread(spreadslider.getValue());
+      repository.start();
+    }
+  };
   OnChangeListener sliderlistener  = new OnChangeListener() {
     @Override
     public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {
-      swarm.setCenterPitch(slider.getValue());
-      swarm.start();
+      repository.setCenterPitch(slider.getValue());
+      repository.spread(spreadslider.getValue());
+      repository.start();
     }};
-  Swarm swarm;
-  Slider slider;
+  Slider swarmslider;
+  Slider spreadslider;
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-   slider = findViewById(R.id.slider) ;
+repository = new SwarmatronRepository();
+    spreadslider = findViewById(R.id.spreadknob);
+   swarmslider = findViewById(R.id.slider) ;
+    swarmslider.addOnChangeListener(sliderlistener);
+    spreadslider.addOnChangeListener(spreadlistener);
 
 
-    slider.addOnChangeListener(sliderlistener);
-   swarm = new Swarm();
 
   }
 

@@ -15,19 +15,24 @@ public class Swarm {
   private String swarmName = "Current Swarm";
   private int busFilter;
   private float centerPitch;
-  private float[] spreadPitches = new float[8];
-  private int dronePitch;
-  private UnitOscillator droneOscillator;
+  public float[] spreadPitches = {centerPitch, centerPitch,centerPitch,centerPitch, centerPitch,centerPitch,centerPitch,centerPitch };
+  private float dronePitch;
+  private Oscillator droneOscillator;
   AudioDeviceManager manager = new AndroidAudioForJSyn();
   Synthesizer swarmatron;
   private final LineOut mLineOut;
+  private final LineOut mLineOut2;
+
+
+
   private final LinearRamp mAmpJack;
   private Oscillator[] swarmoscillators;
 
 
   public Swarm() {
-    swarmoscillators = new Oscillator[]{new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator()};
 
+    swarmoscillators = new Oscillator[]{new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator(), new Oscillator()};
+droneOscillator = new Oscillator();
 swarmatron = JSyn.createSynthesizer(manager);
     swarmatron.add(mAmpJack = new LinearRamp());
     swarmatron.add(swarmoscillators[0].oscillator);
@@ -40,16 +45,28 @@ swarmatron = JSyn.createSynthesizer(manager);
     swarmatron.add(swarmoscillators[7].oscillator);
 
     swarmatron.add(mLineOut = new LineOut());
+    swarmatron.add(mLineOut2 = new LineOut());
+
+
+
 
     swarmoscillators[0].oscillator.output.connect(0, mLineOut.input, 0);
     swarmoscillators[1].oscillator.output.connect(0, mLineOut.input, 0);
-    swarmoscillators[2].oscillator.output.connect(0, mLineOut.input, 0);
-    swarmoscillators[3].oscillator.output.connect(0, mLineOut.input, 0);
-    swarmoscillators[4].oscillator.output.connect(0, mLineOut.input, 0);
-    swarmoscillators[5].oscillator.output.connect(0, mLineOut.input, 0);
-    swarmoscillators[6].oscillator.output.connect(0, mLineOut.input, 0);
-    swarmoscillators[7].oscillator.output.connect(0, mLineOut.input, 0);
+    swarmoscillators[2].oscillator.output.connect(0, mLineOut.input, 1);
+    swarmoscillators[3].oscillator.output.connect(0, mLineOut.input, 1);
+    swarmoscillators[4].oscillator.output.connect(0, mLineOut2.input, 0);
+    swarmoscillators[5].oscillator.output.connect(0, mLineOut2.input, 0);
+    swarmoscillators[6].oscillator.output.connect(0, mLineOut2.input, 1);
+    swarmoscillators[7].oscillator.output.connect(0, mLineOut2.input, 1);
 
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[0]);
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[1]);
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[2]);
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[3]);
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[4]);
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[5]);
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[6]);
+    swarmoscillators[0].oscillator.phase.set(spreadPitches[7]);
   }
 
 
@@ -57,21 +74,23 @@ swarmatron = JSyn.createSynthesizer(manager);
     setOscillatorFrequency();
 swarmatron.start();
 mLineOut.start();
+mLineOut2.start();
+
+
+
   }
   public void setOscillatorFrequency() {
-    swarmoscillators[0].oscillator.frequency.set(centerPitch);
-    swarmoscillators[1].oscillator.frequency.set(centerPitch);
-    swarmoscillators[2].oscillator.frequency.set(centerPitch);
-    swarmoscillators[3].oscillator.frequency.set(centerPitch);
-    swarmoscillators[4].oscillator.frequency.set(centerPitch);
-    swarmoscillators[5].oscillator.frequency.set(centerPitch);
-    swarmoscillators[6].oscillator.frequency.set(centerPitch);
-    swarmoscillators[7].oscillator.frequency.set(centerPitch);
+    swarmoscillators[0].oscillator.frequency.set(spreadPitches[0]);
+    swarmoscillators[1].oscillator.frequency.set(spreadPitches[1]);
+    swarmoscillators[2].oscillator.frequency.set(spreadPitches[2]);
+    swarmoscillators[3].oscillator.frequency.set(spreadPitches[3]);
+    swarmoscillators[4].oscillator.frequency.set(spreadPitches[4]);
+    swarmoscillators[5].oscillator.frequency.set(spreadPitches[5]);
+    swarmoscillators[6].oscillator.frequency.set(spreadPitches[6]);
+    swarmoscillators[7].oscillator.frequency.set(spreadPitches[7]);
 
 
-  }
-  public void drone() {
-    droneOscillator.start();
+
   }
 
   @Override
@@ -124,10 +143,11 @@ mLineOut.start();
   }
 
   public void setSpreadPitches(float[] spreadPitches) {
+
     this.spreadPitches = spreadPitches;
   }
 
-  public int getDronePitch() {
+  public float getDronePitch() {
     return dronePitch;
   }
 
@@ -144,11 +164,11 @@ mLineOut.start();
     this.swarmoscillators = swarmoscillators;
   }
 
-  public UnitOscillator getDroneOscillator() {
+  public Oscillator getDroneOscillator() {
     return droneOscillator;
   }
 
-  public void setDroneOscillator(UnitOscillator droneOscillator) {
+  public void setDroneOscillator(Oscillator droneOscillator) {
     this.droneOscillator = droneOscillator;
   }
   @NonNull

@@ -17,7 +17,7 @@ public UnitOscillator oscillator;
 private float frequency;
 
 Oscillator(){
-  oscillator = new SineOscillator();
+  oscillator = new SquareOscillator();
 
 }
   @Override

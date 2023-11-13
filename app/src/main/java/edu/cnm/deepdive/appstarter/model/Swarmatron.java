@@ -10,8 +10,6 @@ import com.jsyn.unitgen.UnitGenerator;
 
 public class Swarmatron {
   public static Swarm liveSwarm = new Swarm();
-  public static MediaPlayer output;
-
   public static Swarm getLiveSwarm() {
     return liveSwarm;
   }
