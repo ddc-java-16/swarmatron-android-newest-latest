@@ -13,11 +13,11 @@ import java.time.Instant;
     tableName = "preset",
     indices = {
         @Index(value = "preset_name", unique = true)
-    },
-    foreignKeys = {
-
-        @ForeignKey(entity = User.class, parentColumns = "user_id", childColumns = "user_id", onDelete = ForeignKey.CASCADE)
     }
+    //foreignKeys = {
+
+      //f  @ForeignKey(entity = User.class, parentColumns = "user_id", childColumns = "user_id", onDelete = ForeignKey.CASCADE)
+  //  }
 
 )
 public class Preset {
@@ -29,10 +29,9 @@ public class Preset {
     @ColumnInfo(name = "preset_name")
     private String presetName;
     @ColumnInfo(name = "filter_position")
-    private int filterPosition;
+    private float filterPosition;
     @ColumnInfo(name = "spread_knob_position")
-    private int spreadKnobPosition;
-
+    private float spreadRibbonPosition;
     @ColumnInfo(name = "waveform_selection")
     private int waveFormSelection;
 
@@ -72,7 +71,7 @@ public class Preset {
         this.presetName = presetName;
     }
 
-    public int getFilterPosition() {
+    public float getFilterPosition() {
         return filterPosition;
     }
 
@@ -80,12 +79,12 @@ public class Preset {
         this.filterPosition = filterPosition;
     }
 
-    public int getSpreadKnobPosition() {
-        return spreadKnobPosition;
+    public float getSpreadKnobPosition() {
+        return spreadRibbonPosition;
     }
 
     public void setSpreadKnobPosition(int spreadKnobPosition) {
-        this.spreadKnobPosition = spreadKnobPosition;
+        this.spreadRibbonPosition = spreadKnobPosition;
     }
 
     public int getWaveFormSelection() {
@@ -94,5 +93,13 @@ public class Preset {
 
     public void setWaveFormSelection(int waveFormSelection) {
         this.waveFormSelection = waveFormSelection;
+    }
+
+    public float getSpreadRibbonPosition() {
+        return spreadRibbonPosition;
+    }
+
+    public void setSpreadRibbonPosition(float spreadRibbonPosition) {
+        this.spreadRibbonPosition = spreadRibbonPosition;
     }
 }

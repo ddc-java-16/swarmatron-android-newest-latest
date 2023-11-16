@@ -7,11 +7,13 @@ import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
 import edu.cnm.deepdive.appstarter.model.Swarm;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class SwarmatronRepository {
 Swarm liveSwarm;
+@Inject
 public SwarmatronRepository() {
   liveSwarm = new Swarm();
 
@@ -22,17 +24,40 @@ public SwarmatronRepository() {
 liveSwarm.setCenterPitch(newPitch);
   }
 
-  public void spread(float spreadrange) {
+  /*public void spread(float spreadrange) {
+  liveSwarm.setCurrentspreadrange(spreadrange);
 
     float centerpitch = liveSwarm.getCenterPitch();
-    float pitchinterval = spreadrange/8;
-   int relativechange = -4;
-   for (int i = 0; i<8 ;i++) {
-     liveSwarm.spreadPitches[i] = centerpitch + (relativechange * pitchinterval);
-     relativechange++;
-   }
+    float pitchinterval = spreadrange / 8;
+    int relativechange = -4;
+    float[] spreadPitches = liveSwarm.getSpreadPitches();;
+    for (int i = 0; i < 8; i++) {
+      if (relativechange == 0) {
+        i--;
+      }
+      spreadPitches[i] = centerpitch + (relativechange * pitchinterval);
+    relativechange++;
+    }
+
+  }*/
+  public void spread(float spreadrange) {
+    liveSwarm.setCurrentspreadrange(spreadrange);
+    float[] spreadPitches = liveSwarm.getSpreadPitches();;
+
+    float centerpitch = liveSwarm.getCenterPitch();
+    for(int i =0 ; i < 8; i++) {
+    float exponent = -spreadrange + (2*i*(spreadrange/7));
+    float frequency = centerpitch * (float) Math.pow(2, exponent);
+    spreadPitches[i] = frequency;
+
+
+    }
+
   }
-  public void start() {
+
+
+
+   public void start() {
   liveSwarm.start();
   }
 

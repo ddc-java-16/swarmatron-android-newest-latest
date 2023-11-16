@@ -28,11 +28,13 @@ import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.model.entity.User;
 import edu.cnm.deepdive.appstarter.service.SwarmatronDatabase.Converters;
 import java.time.Instant;
+import javax.inject.Singleton;
 
 /**
  * Defines a connection to a local Room/SQLite database, All database reads/writes are performed
  * using data-access object (DAO) instances obtained from the singleton instance of this class.
  */
+@Singleton
 @Database(
     entities = {User.class, Preset.class},
     version = 1

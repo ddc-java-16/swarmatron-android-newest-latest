@@ -6,30 +6,90 @@
   android:layout_height="match_parent"
   android:background="@drawable/test"
   android:orientation="horizontal">
+<androidx.constraintlayout.widget.Guideline
+  android:id="@+id/largeribbonstart"
+  android:layout_width="0dp"
+  android:layout_height="wrap_content"
+  app:layout_constraintGuide_percent="0.04"
+  android:orientation="vertical"
+ />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/largeribbonend"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.88"
+    android:orientation="vertical"
+    />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/smallibbonend"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.8"
+    android:orientation="vertical"
+    />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/smallibbonstart"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.14"
+    android:orientation="vertical"
+    />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/knobbaseline"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    app:layout_constraintGuide_percent="0.307"
+    android:orientation="horizontal"
+    />
+
 
   <com.google.android.material.slider.Slider
 
     android:id="@+id/slider"
-    app:layout_constraintTop_toTopOf="parent"
+    android:layout_height="wrap_content"
+    android:layout_width="0dp"
+    app:layout_constraintWidth_percent="0.84"
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+    android:valueFrom="80"
+    android:valueTo="1100"
     app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_width="match_parent"
-    android:valueFrom="0"
-    android:valueTo="1200"
-    android:layout_height="@dimen/test_slider_height"
-    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"></com.google.android.material.slider.Slider>
-
-
+    app:layout_constraintEnd_toEndOf="@id/largeribbonend"
+    app:layout_constraintStart_toStartOf="@id/largeribbonstart"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.528"
+    > </com.google.android.material.slider.Slider>
   <com.google.android.material.slider.Slider
-
     android:id="@+id/spreadknob"
-    android:layout_width="400dp"
-    android:layout_height="30dp"
+    android:layout_height="49dp"
+    android:layout_width="0dp"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
     android:valueFrom="0"
-    android:valueTo="400"
+    android:valueTo="1"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@id/smallibbonend"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toEndOf="@id/smallibbonstart"
     app:layout_constraintTop_toBottomOf="@id/slider"
+    app:layout_constraintVertical_bias="0.338"
+    app:layout_constraintWidth_percent="0.67"></com.google.android.material.slider.Slider>
+  <Button
+    android:id="@+id/testsave"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"></com.google.android.material.slider.Slider>
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_margin="15dp"
+    android:layout_width="100dp"
+    android:layout_height="40dp"
+    android:text="@string/save_preset"
+   />
+  <Button
+    android:id="@+id/loadbutton"
+    app:layout_constraintEnd_toStartOf="@id/testsave"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_margin="15dp"
+    android:layout_width="100dp"
+    android:layout_height="40dp"
+    android:text="LOAD PRESET"
+    />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

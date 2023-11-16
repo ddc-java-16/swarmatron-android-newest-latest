@@ -1,34 +1,33 @@
 package edu.cnm.deepdive.appstarter.viewmodel;
 
+import android.content.Context;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModel;
-import androidx.room.RoomSQLiteQuery.Binding;
-import edu.cnm.deepdive.appstarter.databinding.ActivityMainBinding;
-import edu.cnm.deepdive.appstarter.model.Oscillator;
+import dagger.hilt.android.lifecycle.HiltViewModel;
+import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.appstarter.model.Swarm;
-import edu.cnm.deepdive.appstarter.model.Swarmatron;
 import edu.cnm.deepdive.appstarter.service.SwarmatronRepository;
+import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
-
+@HiltViewModel
 public class SwarmatronViewModel extends ViewModel implements DefaultLifecycleObserver {
 
-private SwarmatronRepository repository;
-  @Override
-  public void onCreate(@NotNull LifecycleOwner owner) {
-    DefaultLifecycleObserver.super.onCreate(owner);
-    repository = new SwarmatronRepository();
-
-
-  }
-private void setCenterPitch(float newPitch) {
-    repository.setCenterPitch(newPitch);
-}
-  public SwarmatronRepository getRepository() {
-    return repository;
-  }
-
-  public void setRepository(SwarmatronRepository repository) {
+  private final SwarmatronRepository repository;
+@Inject
+  SwarmatronViewModel(@ApplicationContext Context context, SwarmatronRepository repository) {
     this.repository = repository;
   }
+
+public void spread(float spreadrange){
+    repository.spread(spreadrange);
+
+}
+public void start(){
+    repository.start();
+}
+  public void setCenterPitch(float newPitch) {
+    repository.setCenterPitch(newPitch);
+  }
+
 }

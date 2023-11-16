@@ -16,6 +16,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class PresetRepository {
+
   private final PresetDao presetDao;
 
   /**
@@ -23,28 +24,30 @@ public class PresetRepository {
    */
 
   @Inject
-  PresetRepository(PresetDao presetDao) {
+  public PresetRepository(PresetDao presetDao) {
     this.presetDao = presetDao;
 
   }
-//retrieve currently apllied preset
+
+  //retrieve currently applied preset
   public Single<Preset> getCurrent() {
-    // return getOrCreate().subscribeOn(Schedulers.io());
     return Single.fromSupplier(() -> new Preset()); // FIXME: 10/19/23 Replace with real code.
   }
 
   public LiveData<Preset> get(long id) {
     return presetDao.select(id);
   }
+
   public LiveData<List<Preset>> getByUser(long id) {
     return presetDao.selectUserPresets(id);
   }
+
   public LiveData<List<Preset>> getAll() {
     return presetDao.selectAllPresets();
   }
 
   //save and update preset method
-  public Single<Preset> save(Preset preset) {
+  public Single<Long> save(Preset preset) {
     return (
         (preset.getId() == 0)
             ? insert(preset)
@@ -54,7 +57,7 @@ public class PresetRepository {
   }
 
   //delete a single preset
- public Completable delete(Preset preset) {
+  public Completable delete(Preset preset) {
     return (
         (preset.getId() == 0)
             ? Completable.complete()
@@ -64,20 +67,17 @@ public class PresetRepository {
         .subscribeOn(Schedulers.io());
   }
 
-  private Single<Preset> insert(Preset preset) {
+  public Single<Long> insert(Preset preset) {
     preset.setCreated(Instant.now());
     return presetDao
-        .insert(preset)
-        .map((id) -> {
-          preset.setId(id);
-          return preset;
-        });
+        .insert(preset);
+
   }
 
-  private Single<Preset> update(Preset preset) {
+  private Single<Long> update(Preset preset) {
     return presetDao
         .update(preset)
-        .map((count) -> preset);
+        .map((count) -> preset.getId());
   }
 
 }
