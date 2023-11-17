@@ -21,10 +21,16 @@ public class SwarmatronViewModel extends ViewModel implements DefaultLifecycleOb
 
 public void spread(float spreadrange){
     repository.spread(spreadrange);
+  }
+  public void changeWaveform(float waveformSelection) {
+      repository.changeOscillatorWaveform(waveformSelection);
 
 }
 public void start(){
     repository.start();
+}
+public void stop() {
+  repository.stop();
 }
   public void setCenterPitch(float newPitch) {
     repository.setCenterPitch(newPitch);

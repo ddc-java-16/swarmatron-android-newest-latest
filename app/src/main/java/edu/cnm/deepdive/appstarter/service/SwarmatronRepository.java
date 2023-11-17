@@ -6,6 +6,7 @@ import com.jsyn.unitgen.SquareOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
+import edu.cnm.deepdive.appstarter.model.Oscillator;
 import edu.cnm.deepdive.appstarter.model.Swarm;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -15,7 +16,7 @@ public class SwarmatronRepository {
 Swarm liveSwarm;
 @Inject
 public SwarmatronRepository() {
-  liveSwarm = new Swarm();
+  liveSwarm = new Swarm(1);
 
 }
 
@@ -24,22 +25,6 @@ public SwarmatronRepository() {
 liveSwarm.setCenterPitch(newPitch);
   }
 
-  /*public void spread(float spreadrange) {
-  liveSwarm.setCurrentspreadrange(spreadrange);
-
-    float centerpitch = liveSwarm.getCenterPitch();
-    float pitchinterval = spreadrange / 8;
-    int relativechange = -4;
-    float[] spreadPitches = liveSwarm.getSpreadPitches();;
-    for (int i = 0; i < 8; i++) {
-      if (relativechange == 0) {
-        i--;
-      }
-      spreadPitches[i] = centerpitch + (relativechange * pitchinterval);
-    relativechange++;
-    }
-
-  }*/
   public void spread(float spreadrange) {
     liveSwarm.setCurrentspreadrange(spreadrange);
     float[] spreadPitches = liveSwarm.getSpreadPitches();;
@@ -60,6 +45,9 @@ liveSwarm.setCenterPitch(newPitch);
    public void start() {
   liveSwarm.start();
   }
+  public void stop() {
+  liveSwarm.stop();
+  }
 
 
 
@@ -67,28 +55,11 @@ liveSwarm.setCenterPitch(newPitch);
 liveSwarm.setDronePitch(newPitch);
   }
 
-  public void changeOscillatorWaveform(int wavformselection, int oscillatorSelection) {
+  public void changeOscillatorWaveform(float wavformselection) {
 
-UnitOscillator chosen = chooseWaveform(wavformselection);
-liveSwarm.setSwarmoscillator(chosen, oscillatorSelection);
+  liveSwarm = new Swarm(wavformselection);
 
-
-  }
-
-  public UnitOscillator chooseWaveform(int waveform) {
-UnitOscillator result;
-    switch (waveform) {
-      case 1:
-         return new SineOscillator();
-      case 2:
-        return new SawtoothOscillator();
-      case 3:
-        return new TriangleOscillator();
-      case 4:
-        return new SquareOscillator();
-    }
-return null;
-  }
+}
 
 
 
@@ -105,4 +76,6 @@ return null;
   public void setLiveSwarm(Swarm liveSwarm) {
     this.liveSwarm = liveSwarm;
   }
+
+
 }

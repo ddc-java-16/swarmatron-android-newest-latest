@@ -32,7 +32,17 @@ public class MainActivity extends AppCompatActivity {
   };
   OnChangeListener sliderlistener = new OnChangeListener() {
     @Override
+    public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+      swarmViewModel.setCenterPitch(binding.slider.getValue());
+      swarmViewModel.spread(binding.spreadknob.getValue());
+      swarmViewModel.start();
+    }
+  };
+  OnChangeListener waveformlistener = new OnChangeListener() {
+    @Override
     public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {
+     swarmViewModel.stop();
+      swarmViewModel.changeWaveform(binding.waveformknob.getValue());
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.spread(binding.spreadknob.getValue());
       swarmViewModel.start();
@@ -55,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     binding.slider.addOnChangeListener(sliderlistener);
     binding.spreadknob.addOnChangeListener(spreadlistener);
+binding.waveformknob.addOnChangeListener(waveformlistener);
     binding.testsave.setOnClickListener((v) -> {
       Preset preset = new Preset();
       preset.setPresetName("test");
@@ -64,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     });
-
   }
 
 

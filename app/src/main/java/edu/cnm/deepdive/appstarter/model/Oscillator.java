@@ -1,25 +1,33 @@
 package edu.cnm.deepdive.appstarter.model;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.SawtoothOscillator;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.SquareOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
-import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.UnitOscillator;
 
 
 public class Oscillator{
-public UnitOscillator oscillator;
-
-private float frequency;
-
-Oscillator(){
-  oscillator = new SquareOscillator();
+private UnitOscillator oscillator;
+Oscillator(float waveformselection){
+  this.oscillator = chooseWaveform(waveformselection);
 
 }
+  public UnitOscillator chooseWaveform(float waveform) {
+    int choice = (int) waveform;
+    switch (choice) {
+      case 1:
+        return new SineOscillator();
+      case 2:
+        return new SawtoothOscillator();
+      case 3:
+        return new TriangleOscillator();
+      case 4:
+        return new SquareOscillator();
+    }
+    return null;
+  };
   @Override
   public int hashCode() {
     return super.hashCode();
