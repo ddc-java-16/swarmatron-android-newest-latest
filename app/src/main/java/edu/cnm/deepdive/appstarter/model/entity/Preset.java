@@ -30,10 +30,10 @@ public class Preset {
     private String presetName;
     @ColumnInfo(name = "filter_position")
     private float filterPosition;
-    @ColumnInfo(name = "spread_knob_position")
+    @ColumnInfo(name = "spread_ribbon_position")
     private float spreadRibbonPosition;
     @ColumnInfo(name = "waveform_selection")
-    private int waveFormSelection;
+    private float waveFormSelection;
 
     @NonNull
     private Instant created = Instant.MIN;
@@ -75,7 +75,7 @@ public class Preset {
         return filterPosition;
     }
 
-    public void setFilterPosition(int filterPosition) {
+    public void setFilterPosition(float filterPosition) {
         this.filterPosition = filterPosition;
     }
 
@@ -83,15 +83,15 @@ public class Preset {
         return spreadRibbonPosition;
     }
 
-    public void setSpreadKnobPosition(int spreadKnobPosition) {
+    public void setSpreadKnobPosition(float spreadKnobPosition) {
         this.spreadRibbonPosition = spreadKnobPosition;
     }
 
-    public int getWaveFormSelection() {
+    public float getWaveFormSelection() {
         return waveFormSelection;
     }
 
-    public void setWaveFormSelection(int waveFormSelection) {
+    public void setWaveFormSelection(float waveFormSelection) {
         this.waveFormSelection = waveFormSelection;
     }
 

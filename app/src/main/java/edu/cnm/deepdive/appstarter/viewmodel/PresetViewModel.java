@@ -11,12 +11,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 import dagger.hilt.android.qualifiers.ApplicationContext;
 import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.service.PresetRepository;
+import edu.cnm.deepdive.appstarter.service.SwarmatronRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import edu.cnm.deepdive.appstarter.model.Swarm;
 import javax.inject.Inject;
 @HiltViewModel
 public class PresetViewModel extends ViewModel implements DefaultLifecycleObserver {
 
-
+  private final SwarmatronRepository swarmRepository;
   private final PresetRepository repository;
   private final MutableLiveData<Long> presetId;
   private final LiveData<Preset> preset;
@@ -25,7 +27,8 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
 
 
   @Inject
-  PresetViewModel(@ApplicationContext Context context, PresetRepository repository) {
+  PresetViewModel(@ApplicationContext Context context, PresetRepository repository, SwarmatronRepository swarmRepository) {
+    this.swarmRepository = swarmRepository;
     this.repository = repository;
     presetId = new MutableLiveData<>();
     preset = Transformations.switchMap(presetId, repository::get);
@@ -35,6 +38,10 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
   }
 
   public void save(Preset preset) {
+    Swarm currentSwarm = swarmRepository.getLiveSwarm();
+    preset.setFilterPosition(currentSwarm.getBusFilter());
+    preset.setSpreadKnobPosition(currentSwarm.getCurrentSpreadrange());
+    preset.setWaveFormSelection(currentSwarm.getWaveformSelection());
     repository.save(preset)
         .subscribe(
             presetId::postValue,

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "625c48cc82c9da898bbdeba09c5fac45",
+    "identityHash": "4c6e55052f768f389ea9908cb508be35",
     "entities": [
       {
         "tableName": "user",
@@ -48,7 +48,7 @@
       },
       {
         "tableName": "preset",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`preset_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` INTEGER NOT NULL, `preset_name` TEXT, `filter_position` REAL NOT NULL, `spread_knob_position` REAL NOT NULL, `waveform_selection` INTEGER NOT NULL, `created` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`preset_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` INTEGER NOT NULL, `preset_name` TEXT, `filter_position` REAL NOT NULL, `spread_ribbon_position` REAL NOT NULL, `waveform_selection` REAL NOT NULL, `created` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -76,14 +76,14 @@
           },
           {
             "fieldPath": "spreadRibbonPosition",
-            "columnName": "spread_knob_position",
+            "columnName": "spread_ribbon_position",
             "affinity": "REAL",
             "notNull": true
           },
           {
             "fieldPath": "waveFormSelection",
             "columnName": "waveform_selection",
-            "affinity": "INTEGER",
+            "affinity": "REAL",
             "notNull": true
           },
           {
@@ -116,7 +116,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '625c48cc82c9da898bbdeba09c5fac45')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4c6e55052f768f389ea9908cb508be35')"
     ]
   }
 }

@@ -39,5 +39,8 @@
   <string name="selectable_text_pref_summary_off">Uneditable text is not selectable.</string>
   <string name="data_test">DATA TEST</string>
   <string name="save_preset">SAVE PRESET</string>
+<!-- TODO: Remove or change this placeholder text -->
+  <string name="hello_blank_fragment">Hello blank fragment</string>
+  <string name="enter_preset_name">Enter Preset Name</string>
 
 </resources>

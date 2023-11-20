@@ -18,7 +18,7 @@ public class Swarm {
   private float busFilter; // Value to be passed the LowPass Filter in the JSyn Synthesizer
   private float centerPitch; // Value from which the array of spread pitches will be extrapolated
   private float currentspreadrange;// Store the current spreadrange applied to the Spread() method, to pass to Database
-  private int waveformselection; // Between 1 -4, Choice of Sine, Square, Saw, or Triangle Oscillator
+  private float waveformselection; // Between 1 -4, Choice of Sine, Square, Saw, or Triangle Oscillator
   private float[] spreadPitches = {centerPitch, centerPitch, centerPitch, centerPitch, centerPitch,
       centerPitch, centerPitch, centerPitch};// Frequencies to be distributed tot he cluster of Oscillator Objects
   private float dronePitch;// Frequency of the Pedal Tone.
@@ -36,7 +36,7 @@ public class Swarm {
 
   public Swarm(float waveformselection) {
 
-
+this.waveformselection = waveformselection;
 
     swarmoscillators = new Oscillator[]{new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection),
         new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection)};
@@ -129,7 +129,7 @@ public class Swarm {
     return busFilter;
   }
 
-  public void setBusFilter(int busFilter) {
+  public void setBusFilter(float busFilter) {
     this.busFilter = busFilter;
   }
 
@@ -192,15 +192,15 @@ public class Swarm {
     return swarmName;
   }
 
-  public int getWaveformselection() {
+  public float getWaveformSelection() {
     return waveformselection;
   }
 
-  public void setWaveformselection(int waveformselection) {
+  public void setWaveformselection(float waveformselection) {
     this.waveformselection = waveformselection;
   }
 
-  public float getCurrentspreadrange() {
+  public float getCurrentSpreadrange() {
     return currentspreadrange;
   }
 
