@@ -15,18 +15,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.appstarter.databinding.FragmentEditPresetBinding;
 import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.viewmodel.PresetViewModel;
 import java.util.regex.Pattern;
+import javax.inject.Inject;
 import org.jetbrains.annotations.NotNull;
 
+@AndroidEntryPoint
 public class EditPresetFragment extends DialogFragment {
-
-
-  private static final Pattern SPLITTER = Pattern.compile("\\W+");
   private FragmentEditPresetBinding binding;
-  private String key;
   private AlertDialog dialog;
   private PresetViewModel viewModel;
   private Preset preset;
@@ -36,9 +36,10 @@ public class EditPresetFragment extends DialogFragment {
   public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
     binding = FragmentEditPresetBinding.inflate(getLayoutInflater(), null, false);
     dialog = new Builder(requireContext())
-        .setTitle(edu.cnm.deepdive.appstarter.R.string.enter_preset_name)
         .setView(binding.getRoot())
         .create();
+
+    viewModel= new ViewModelProvider(this).get(PresetViewModel.class);
     binding.savebutton.setOnClickListener((v) -> {
       preset = new Preset();
       preset.setPresetName(String.valueOf(binding.presetname.getText()));

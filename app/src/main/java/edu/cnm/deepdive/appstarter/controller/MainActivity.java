@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
-  PresetViewModel presetViewModel;
   SwarmatronViewModel swarmViewModel;
   ActivityMainBinding binding;
   EditPresetFragment presetFragment;
@@ -57,8 +56,6 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     ViewModelProvider viewModelProvider = new ViewModelProvider(this);
-    presetViewModel = viewModelProvider
-        .get(PresetViewModel.class);
     swarmViewModel = viewModelProvider
         .get(SwarmatronViewModel.class);
     setContentView(binding.getRoot());
@@ -70,15 +67,11 @@ public class MainActivity extends AppCompatActivity {
 binding.waveformknob.addOnChangeListener(waveformlistener);
 presetFragment = new EditPresetFragment();
     binding.testsave.setOnClickListener((v) -> {
+      getWindow().getDecorView().setSystemUiVisibility(
+          binding.getRoot().SYSTEM_UI_FLAG_HIDE_NAVIGATION|
+              binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
       FragmentManager manager = getSupportFragmentManager();
-      presetFragment.show(manager, "Choose Preset Name");
-      //Preset preset = new Preset();
-      //preset.setPresetName("test");
-     // preset.setFilterPosition(20);
-      //presetViewModel.save(preset);
-
-
-
+      presetFragment.show(manager, "");
     });
   }
 
