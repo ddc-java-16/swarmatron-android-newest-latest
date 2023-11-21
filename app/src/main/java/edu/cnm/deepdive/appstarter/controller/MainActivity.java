@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
   SwarmatronViewModel swarmViewModel;
   ActivityMainBinding binding;
   EditPresetFragment presetFragment;
+  LoadPresetFragment loadPresetFragment;
 
   OnChangeListener spreadlistener = new OnChangeListener() {
     @Override
@@ -65,13 +66,19 @@ public class MainActivity extends AppCompatActivity {
     binding.slider.addOnChangeListener(sliderlistener);
     binding.spreadknob.addOnChangeListener(spreadlistener);
 binding.waveformknob.addOnChangeListener(waveformlistener);
+    FragmentManager manager = getSupportFragmentManager();
 presetFragment = new EditPresetFragment();
+loadPresetFragment = new LoadPresetFragment();
     binding.testsave.setOnClickListener((v) -> {
       getWindow().getDecorView().setSystemUiVisibility(
           binding.getRoot().SYSTEM_UI_FLAG_HIDE_NAVIGATION|
               binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-      FragmentManager manager = getSupportFragmentManager();
+
       presetFragment.show(manager, "");
+    });
+    binding.loadbutton.setOnClickListener((v) -> {
+
+      loadPresetFragment.show(manager, "");
     });
   }
 

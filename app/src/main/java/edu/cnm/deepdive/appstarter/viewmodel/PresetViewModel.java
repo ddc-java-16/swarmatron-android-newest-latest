@@ -14,6 +14,7 @@ import edu.cnm.deepdive.appstarter.service.PresetRepository;
 import edu.cnm.deepdive.appstarter.service.SwarmatronRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import edu.cnm.deepdive.appstarter.model.Swarm;
+import java.util.List;
 import javax.inject.Inject;
 @HiltViewModel
 public class PresetViewModel extends ViewModel implements DefaultLifecycleObserver {
@@ -49,6 +50,10 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
             pending
 
         );
+  }
+
+  public LiveData<List<Preset>> getAllPresets(){
+   return repository.getAll();
   }
 
   public MutableLiveData<Long> getPresetId() {

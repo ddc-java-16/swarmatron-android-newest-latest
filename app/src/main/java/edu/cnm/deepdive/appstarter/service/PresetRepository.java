@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -44,7 +45,9 @@ public class PresetRepository {
   }
 
   public LiveData<List<Preset>> getAll() {
-    return presetDao.selectAllPresets();
+ return  presetDao.selectAllPresets();
+
+
   }
 
   //save and update preset method
