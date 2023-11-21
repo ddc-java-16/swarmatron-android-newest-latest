@@ -44,6 +44,8 @@ public class EditPresetFragment extends DialogFragment {
       preset = new Preset();
       preset.setPresetName(String.valueOf(binding.presetname.getText()));
       viewModel.save(preset);
+      viewModel.fetch(preset.getId());
+      dismiss();
     });
     return dialog;
 

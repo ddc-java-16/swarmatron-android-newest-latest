@@ -102,4 +102,10 @@ public class Preset {
     public void setSpreadRibbonPosition(float spreadRibbonPosition) {
         this.spreadRibbonPosition = spreadRibbonPosition;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return presetName;
+    }
 }

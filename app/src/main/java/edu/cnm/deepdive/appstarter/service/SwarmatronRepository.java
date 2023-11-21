@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.appstarter.service;
 
+import androidx.lifecycle.LiveData;
 import com.jsyn.unitgen.SawtoothOscillator;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.SquareOscillator;
@@ -8,6 +9,7 @@ import com.jsyn.unitgen.UnitOscillator;
 
 import edu.cnm.deepdive.appstarter.model.Oscillator;
 import edu.cnm.deepdive.appstarter.model.Swarm;
+import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -49,6 +51,13 @@ liveSwarm.setCenterPitch(newPitch);
   liveSwarm.stop();
   }
 
+  public void loadSwarm(Preset preset) {
+  stop();
+  changeOscillatorWaveform(preset.getWaveFormSelection());
+  spread(preset.getSpreadRibbonPosition());
+  start();
+
+  }
 
 
   public void changeDronePitch(int newPitch) {

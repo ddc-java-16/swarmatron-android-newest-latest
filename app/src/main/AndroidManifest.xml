@@ -33,7 +33,8 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
     tools:ignore="AllowBackup,DataExtractionRules">
-    <activity android:name=".controller.MainActivity"
+    <activity android:name=".controller.SplashScreenActivity"
+      android:launchMode="singleTop"
       android:exported="true"
       android:configChanges="orientation"
       android:screenOrientation="landscape">
@@ -42,7 +43,11 @@
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+
+
     </activity>
+    <activity android:name=".controller.MainActivity"
+      android:exported="true"/>
   </application>
 
 

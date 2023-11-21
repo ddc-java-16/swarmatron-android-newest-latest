@@ -22,6 +22,8 @@ Single<Integer> delete(Preset preset);
 
   @Query("SELECT * FROM preset WHERE preset_id = :presetid")
 LiveData<Preset> select(Long presetid);
+  @Query("SELECT * FROM preset WHERE preset_name = :presetname")
+  LiveData<Preset> selectByName(String presetname);
 
   @Query("SELECT * FROM preset ORDER BY preset_name ASC")
   LiveData<List<Preset>> selectAllPresets();

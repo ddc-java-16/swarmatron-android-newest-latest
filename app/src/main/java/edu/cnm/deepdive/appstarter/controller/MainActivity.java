@@ -2,6 +2,7 @@ package edu.cnm.deepdive.appstarter.controller;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import com.google.android.material.slider.Slider;
 import com.google.android.material.slider.Slider.OnChangeListener;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.appstarter.databinding.ActivityMainBinding;
+import edu.cnm.deepdive.appstarter.databinding.FragmentLoadPresetBinding;
 import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.viewmodel.PresetViewModel;
 import edu.cnm.deepdive.appstarter.viewmodel.SwarmatronViewModel;
@@ -19,7 +21,9 @@ import org.jetbrains.annotations.NotNull;
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
   SwarmatronViewModel swarmViewModel;
+  PresetViewModel presetViewModel;
   ActivityMainBinding binding;
+  FragmentLoadPresetBinding presetbinding;
   EditPresetFragment presetFragment;
   LoadPresetFragment loadPresetFragment;
 
@@ -56,9 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
+    presetbinding = FragmentLoadPresetBinding.inflate(getLayoutInflater());
     ViewModelProvider viewModelProvider = new ViewModelProvider(this);
     swarmViewModel = viewModelProvider
         .get(SwarmatronViewModel.class);
+    presetViewModel = viewModelProvider
+        .get(PresetViewModel.class);
+    presetViewModel.getPreset()
+            .observe(this, preset -> {
+              Log.d(getClass().getSimpleName(), preset.toString());
+              binding.waveformknob.setValue(preset.getWaveFormSelection());
+              binding.spreadknob.setValue(preset.getSpreadKnobPosition());
+            });
+
     setContentView(binding.getRoot());
     getWindow().getDecorView().setSystemUiVisibility(
         binding.getRoot().SYSTEM_UI_FLAG_HIDE_NAVIGATION|
@@ -75,11 +89,11 @@ loadPresetFragment = new LoadPresetFragment();
               binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
       presetFragment.show(manager, "");
-    });
-    binding.loadbutton.setOnClickListener((v) -> {
+     
 
-      loadPresetFragment.show(manager, "");
     });
+
+    binding.loadbutton.setOnClickListener((v) -> loadPresetFragment.show(manager, ""));
   }
 
 

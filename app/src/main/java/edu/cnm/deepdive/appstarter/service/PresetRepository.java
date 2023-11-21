@@ -31,6 +31,7 @@ public class PresetRepository {
 
   }
 
+
   //retrieve currently applied preset
   public Single<Preset> getCurrent() {
     return Single.fromSupplier(() -> new Preset()); // FIXME: 10/19/23 Replace with real code.
@@ -38,6 +39,9 @@ public class PresetRepository {
 
   public LiveData<Preset> get(long id) {
     return presetDao.select(id);
+  }
+  public LiveData<Preset> getByName(String presetname) {
+    return presetDao.selectByName(presetname);
   }
 
   public LiveData<List<Preset>> getByUser(long id) {

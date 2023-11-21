@@ -51,15 +51,21 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
 
         );
   }
+  public void load(Preset preset) {
+    swarmRepository.loadSwarm(preset);
+  }
 
   public LiveData<List<Preset>> getAllPresets(){
    return repository.getAll();
   }
 
-  public MutableLiveData<Long> getPresetId() {
+  public LiveData<Long> getPresetId() {
     return presetId;
   }
 
+  public LiveData<Preset> getPresetByName(String presetname) {
+    return repository.getByName(presetname);
+  }
   public LiveData<Preset> getPreset() {
     return preset;
   }
@@ -71,5 +77,9 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
   private void postThrowable(Throwable throwable) {
     Log.e(getClass().getSimpleName(), throwable.getMessage(), throwable);
     this.throwable.postValue(throwable);
+  }
+
+  public void fetch(long presetId) {
+    this.presetId.postValue(presetId);
   }
 }

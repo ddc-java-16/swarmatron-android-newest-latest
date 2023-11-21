@@ -143,6 +143,8 @@ dependencies {
     implementation(libs.stetho)
 
     //Android Gif Animation Dependency
+    // https://mvnrepository.com/artifact/pl.droidsonroids.gif/android-gif-drawable
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
 
 
 
