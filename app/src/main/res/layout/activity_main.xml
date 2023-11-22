@@ -35,6 +35,13 @@
     android:orientation="vertical"
     />
   <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/knobcenterline"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.49"
+    android:orientation="vertical"
+    />
+  <androidx.constraintlayout.widget.Guideline
     android:id="@+id/knobbaseline"
     android:layout_width="wrap_content"
     android:layout_height="0dp"
@@ -52,6 +59,11 @@
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
     android:valueFrom="80"
     android:valueTo="1100"
+    app:trackColor="@color/clear"
+    app:thumbColor="@color/clear"
+    app:haloColor="@color/clear"
+    android:outlineSpotShadowColor="@color/clear"
+    app:tickVisible="false"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="@id/largeribbonend"
     app:layout_constraintStart_toStartOf="@id/largeribbonstart"
@@ -70,6 +82,11 @@
     app:layout_constraintHorizontal_bias="1.0"
     app:layout_constraintStart_toEndOf="@id/smallibbonstart"
     app:layout_constraintTop_toBottomOf="@id/slider"
+    app:trackColor="@color/clear"
+    app:thumbColor="@color/clear"
+    app:haloColor="@color/clear"
+    android:outlineSpotShadowColor="@color/clear"
+    app:tickVisible="false"
     app:layout_constraintVertical_bias="0.338"
     app:layout_constraintWidth_percent="0.67"></com.google.android.material.slider.Slider>
   <Button
@@ -90,18 +107,35 @@
     android:layout_height="40dp"
     android:text="LOAD PRESET"
     />
+
+  <ImageView
+    android:id="@+id/waveformpicker"
+    app:layout_constraintTop_toTopOf="@id/knobbaseline"
+    app:layout_constraintBottom_toBottomOf="@id/knobbaseline"
+    app:layout_constraintStart_toStartOf="@id/knobcenterline"
+    app:layout_constraintEnd_toEndOf="@id/knobcenterline"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintHeight_percent="0.23"
+    app:layout_constraintWidth_percent="0.23"
+    android:src="@drawable/waveform_picker"/>
   <com.google.android.material.slider.Slider
     android:id="@+id/waveformknob"
- app:layout_constraintTop_toTopOf="@id/knobbaseline"
+    app:layout_constraintTop_toTopOf="@id/knobbaseline"
     app:layout_constraintBottom_toBottomOf="@id/knobbaseline"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="@id/knobcenterline"
+    app:layout_constraintEnd_toEndOf="@id/knobcenterline"
     android:stepSize="1"
     android:valueFrom="1"
     android:valueTo="4"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
-    android:rotation="90"
+    android:rotation="-90"
+    app:trackColor="@color/clear"
+    app:thumbColor="@color/clear"
+    app:haloColor="@color/clear"
+    android:outlineSpotShadowColor="@color/clear"
+    app:tickVisible="false"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
 
 

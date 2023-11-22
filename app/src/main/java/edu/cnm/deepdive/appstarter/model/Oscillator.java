@@ -18,13 +18,14 @@ Oscillator(float waveformselection){
     int choice = (int) waveform;
     switch (choice) {
       case 1:
-        return new SineOscillator();
+      return new SawtoothOscillator();
       case 2:
-        return new SawtoothOscillator();
-      case 3:
-        return new TriangleOscillator();
-      case 4:
         return new SquareOscillator();
+      case 3:
+      return new SineOscillator();
+      case 4:
+        return new TriangleOscillator();
+
     }
     return null;
   };

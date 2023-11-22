@@ -38,7 +38,7 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
 
   }
 
-  public void save(Preset preset) {
+  public Preset  save(Preset preset) {
     Swarm currentSwarm = swarmRepository.getLiveSwarm();
     preset.setFilterPosition(currentSwarm.getBusFilter());
     preset.setSpreadKnobPosition(currentSwarm.getCurrentSpreadrange());
@@ -50,6 +50,7 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
             pending
 
         );
+    return preset;
   }
   public void load(Preset preset) {
     swarmRepository.loadSwarm(preset);

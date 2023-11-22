@@ -1,6 +1,7 @@
 package edu.cnm.deepdive.appstarter.controller;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import androidx.annotation.NonNull;
@@ -48,12 +49,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {
      swarmViewModel.stop();
+     int waveform = (int) binding.waveformknob.getValue();
       swarmViewModel.changeWaveform(binding.waveformknob.getValue());
       swarmViewModel.setCenterPitch(binding.slider.getValue());
-      swarmViewModel.spread(binding.spreadknob.getValue());
+      swarmViewModel.spread(waveform);
+      if(waveform == 1) {
+        binding.waveformpicker.setRotation(-55);
+      }
+      if(waveform == 2) {
+        binding.waveformpicker.setRotation(0);
+      }
+      if(waveform == 3) {
+        binding.waveformpicker.setRotation(90);
+      }
+      if(waveform == 4) {
+        binding.waveformpicker.setRotation(160);
+      }
+
+
+
+
+
+
       swarmViewModel.start();
-    }
-  };
+    }};
+
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     binding.slider.addOnChangeListener(sliderlistener);
     binding.spreadknob.addOnChangeListener(spreadlistener);
 binding.waveformknob.addOnChangeListener(waveformlistener);
+binding.waveformpicker.setRotation(-60);
     FragmentManager manager = getSupportFragmentManager();
 presetFragment = new EditPresetFragment();
 loadPresetFragment = new LoadPresetFragment();
@@ -95,6 +116,7 @@ loadPresetFragment = new LoadPresetFragment();
 
     binding.loadbutton.setOnClickListener((v) -> loadPresetFragment.show(manager, ""));
   }
+
 
 
 }

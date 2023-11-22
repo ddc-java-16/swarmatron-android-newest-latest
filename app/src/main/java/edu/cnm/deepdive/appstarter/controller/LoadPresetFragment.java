@@ -23,33 +23,24 @@ import java.util.List;
 
 @AndroidEntryPoint
 public class LoadPresetFragment extends DialogFragment implements LifecycleOwner {
-
   AlertDialog dialog;
   FragmentLoadPresetBinding binding;
-  ActivityMainBinding mainBinding;
   PresetViewModel viewModel;
-  List<String> presetnames;
-
   @NonNull
   @Override
   public Dialog onCreateDialog(
       @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
     binding = FragmentLoadPresetBinding.inflate(getLayoutInflater(), null, false);
-    //mainBinding = ActivityMainBinding.inflate(getLayoutInflater(), null, false);
-
     binding.presetlist.setOnItemClickListener((parent, view, position, id) -> {
       Preset preset = (Preset) parent.getItemAtPosition(position);
       viewModel.fetch(preset.getId());
       dismiss();
     });
-
     dialog = new Builder(requireContext())
         .setView(binding.getRoot())
         .create();
-
     return dialog;
   }
-
   @Nullable
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,14 +48,12 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
       @Nullable Bundle savedInstanceState) {
     return binding.getRoot();
   }
-
   @Override
   public void onViewCreated(@NonNull View view,
       @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     viewModel = new ViewModelProvider(requireActivity()).get(PresetViewModel.class);
     viewModel.getAllPresets().observe(this, presets -> {
-
       binding.presetlist.setAdapter(
           new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1,
               presets));
