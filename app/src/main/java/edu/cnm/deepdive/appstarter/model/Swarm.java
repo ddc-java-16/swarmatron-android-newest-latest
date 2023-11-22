@@ -10,12 +10,14 @@ import com.jsyn.devices.AudioDeviceManager;
 import com.jsyn.unitgen.FilterLowPass;
 import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.LinearRamp;
+import com.jsyn.unitgen.PinkNoise;
 import com.jsyn.unitgen.UnitOscillator;
 
 public class Swarm {
 
   private String swarmName = "Current Swarm"; // Name of the current swarm specified by default or from user created preset
   private float busFilter; // Value to be passed the LowPass Filter in the JSyn Synthesizer
+  private float pinknoiselevel;
   private float centerPitch; // Value from which the array of spread pitches will be extrapolated
   private float currentspreadrange;// Store the current spreadrange applied to the Spread() method, to pass to Database
   private float waveformselection; // Between 1 -4, Choice of Sine, Square, Saw, or Triangle Oscillator
@@ -28,6 +30,7 @@ public class Swarm {
   private AudioDeviceManager manager = new AndroidAudioForJSyn(); //Android Audio Manager to handle Output from Jsyn
   private Synthesizer swarmatron; // Jsyn Synthesizer Object
   private final FilterLowPass cutoff;
+  private final PinkNoise pinknoise;
   private final LineOut mLineOut; // JSyn Output for the constituents of the Synthesizer object
 
 
@@ -37,6 +40,7 @@ public class Swarm {
   public Swarm(float waveformselection) {
 
 this.waveformselection = waveformselection;
+pinknoise = new PinkNoise();
 
     swarmoscillators = new Oscillator[]{new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection),
         new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection), new Oscillator(waveformselection)};
@@ -46,7 +50,7 @@ this.waveformselection = waveformselection;
     swarmatron.add(mAmpJack = new LinearRamp());
     swarmatron.add(cutoff = new FilterLowPass());
     cutoff.frequency.set(1000);
-
+    pinknoise.amplitude.set(0);
     swarmatron.add(swarmoscillators[0].getOscillator());
     swarmatron.add(swarmoscillators[1].getOscillator());
     swarmatron.add(swarmoscillators[2].getOscillator());
@@ -55,6 +59,7 @@ this.waveformselection = waveformselection;
     swarmatron.add(swarmoscillators[5].getOscillator());
     swarmatron.add(swarmoscillators[6].getOscillator());
     swarmatron.add(swarmoscillators[7].getOscillator());
+    swarmatron.add(pinknoise);
 
     swarmoscillators[0].getOscillator().amplitude.set(0.01);
     swarmoscillators[1].getOscillator().amplitude.set(0.01);
@@ -64,6 +69,7 @@ this.waveformselection = waveformselection;
     swarmoscillators[5].getOscillator().amplitude.set(0.01);
     swarmoscillators[6].getOscillator().amplitude.set(0.01);
     swarmoscillators[7].getOscillator().amplitude.set(0.01);
+    pinknoise.amplitude.set(0.00);
 
     swarmoscillators[0].getOscillator().output.connect(0, cutoff.input, 0);
     swarmoscillators[1].getOscillator().output.connect(0, cutoff.input, 0);
@@ -73,6 +79,7 @@ this.waveformselection = waveformselection;
     swarmoscillators[5].getOscillator().output.connect(0, cutoff.input, 0);
     swarmoscillators[6].getOscillator().output.connect(0, cutoff.input, 0);
     swarmoscillators[7].getOscillator().output.connect(0, cutoff.input, 0);
+    pinknoise.output.connect(0, cutoff.input, 0);
     cutoff.output.connect(0, mLineOut.input, 0);
 
 
@@ -103,8 +110,16 @@ this.waveformselection = waveformselection;
     swarmoscillators[5].getOscillator().frequency.set(spreadPitches[5]);
     swarmoscillators[6].getOscillator().frequency.set(spreadPitches[6]);
     swarmoscillators[7].getOscillator().frequency.set(spreadPitches[7]);
+    cutoff.frequency.set(busFilter);
+    pinknoise.amplitude.set(pinknoiselevel);
 
+  }
 
+  public void setCutoff(float cutoff) {
+    busFilter = cutoff;
+  }
+  public void setPinknoiselevel(float pinknoiselevel) {
+    this.pinknoiselevel = pinknoiselevel;
   }
 
   @Override
@@ -166,18 +181,6 @@ this.waveformselection = waveformselection;
     this.dronePitch = dronePitch;
   }
 
-  public Oscillator[] getSwarmoscillators() {
-    return swarmoscillators;
-  }
-
-  public void setSwarmoscillator(UnitOscillator choice, int oscillatorselection) {
-    swarmoscillators[oscillatorselection].setOscillator(choice);
-  }
-
-  public void setSwarmoscillators(Oscillator[] swarmoscillators) {
-    this.swarmoscillators = swarmoscillators;
-  }
-
   public Oscillator getDroneOscillator() {
     return droneOscillator;
   }
@@ -206,5 +209,9 @@ this.waveformselection = waveformselection;
 
   public void setCurrentspreadrange(float currentspreadrange) {
     this.currentspreadrange = currentspreadrange;
+  }
+
+  public float getPinknoiselevel() {
+    return pinknoiselevel;
   }
 }

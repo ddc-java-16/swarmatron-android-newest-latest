@@ -26,6 +26,11 @@ public void spread(float spreadrange){
       repository.changeOscillatorWaveform(waveformSelection);
 
 }
+public void changeFilterCutoff(float cutoff) {
+  repository.changeFilterCutoff(cutoff);
+}
+public void addnoise(float noiseamount) {
+    repository.addNoise(noiseamount);}
 public void start(){
     repository.start();
 }

@@ -1,9 +1,9 @@
 package edu.cnm.deepdive.appstarter.controller;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View.OnTouchListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,10 +11,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.slider.Slider.OnChangeListener;
+import com.google.android.material.slider.Slider.OnSliderTouchListener;
 import dagger.hilt.android.AndroidEntryPoint;
 import edu.cnm.deepdive.appstarter.databinding.ActivityMainBinding;
 import edu.cnm.deepdive.appstarter.databinding.FragmentLoadPresetBinding;
-import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.viewmodel.PresetViewModel;
 import edu.cnm.deepdive.appstarter.viewmodel.SwarmatronViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -28,21 +28,39 @@ public class MainActivity extends AppCompatActivity {
   EditPresetFragment presetFragment;
   LoadPresetFragment loadPresetFragment;
 
+  boolean swarmIsActive;
+
+  OnSliderTouchListener activateListener = new OnSliderTouchListener() {
+    @Override
+    public void onStartTrackingTouch(@NonNull Slider slider) {
+      swarmIsActive = true;
+      swarmViewModel.setCenterPitch(binding.slider.getValue());
+      swarmViewModel.start();
+    }
+
+    @Override
+    public void onStopTrackingTouch(@NonNull Slider slider) {
+swarmIsActive = false;
+swarmViewModel.stop();
+    }
+  };
   OnChangeListener spreadlistener = new OnChangeListener() {
     @Override
     public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.spread(binding.spreadknob.getValue());
-
+      if(swarmIsActive) {
       swarmViewModel.start();
     }
-  };
+  }};
   OnChangeListener sliderlistener = new OnChangeListener() {
     @Override
     public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.spread(binding.spreadknob.getValue());
-      swarmViewModel.start();
+      if(swarmIsActive) {
+        swarmViewModel.start();
+      }
     }
   };
   OnChangeListener waveformlistener = new OnChangeListener() {
@@ -52,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
      int waveform = (int) binding.waveformknob.getValue();
       swarmViewModel.changeWaveform(binding.waveformknob.getValue());
       swarmViewModel.setCenterPitch(binding.slider.getValue());
+      swarmViewModel.changeFilterCutoff(binding.filterknob.getValue());
       swarmViewModel.spread(waveform);
       if(waveform == 1) {
         binding.waveformpicker.setRotation(-55);
@@ -70,10 +89,34 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-      swarmViewModel.start();
+      if(swarmIsActive) {
+        swarmViewModel.start();
+      }
     }};
 
+OnChangeListener filterListener = new OnChangeListener() {
+  @Override
+  public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+
+float anglecoefficient = binding.filterknob.getValue();
+    swarmViewModel.changeFilterCutoff(binding.filterknob.getValue());
+  binding.fiterpicker.setRotation((float) (anglecoefficient* 0.18) - 45);
+    if(swarmIsActive) {
+      swarmViewModel.start();
+    }
+  }
+};
+  OnChangeListener noiseListener = new OnChangeListener() {
+    @Override
+    public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+
+      float anglecoefficient = binding.noiseknob.getValue();
+      swarmViewModel.addnoise(binding.noiseknob.getValue());
+      binding.noisepicker.setRotation((anglecoefficient *900)-45);
+      if(swarmIsActive) {
+        swarmViewModel.start();
+      }
+    }};
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
               Log.d(getClass().getSimpleName(), preset.toString());
               binding.waveformknob.setValue(preset.getWaveFormSelection());
               binding.spreadknob.setValue(preset.getSpreadKnobPosition());
+              binding.filterknob.setValue(preset.getFilterPosition());
+              binding.noiseknob.setValue(preset.getNoiseAmount());
             });
 
     setContentView(binding.getRoot());
@@ -98,9 +143,15 @@ public class MainActivity extends AppCompatActivity {
         binding.getRoot().SYSTEM_UI_FLAG_HIDE_NAVIGATION|
             binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     binding.slider.addOnChangeListener(sliderlistener);
+    binding.slider.addOnSliderTouchListener(activateListener);
     binding.spreadknob.addOnChangeListener(spreadlistener);
 binding.waveformknob.addOnChangeListener(waveformlistener);
+binding.filterknob.addOnChangeListener(filterListener);
+binding.noiseknob.addOnChangeListener(noiseListener);
+
+binding.filterknob.setValue(1000);
 binding.waveformpicker.setRotation(-60);
+binding.fiterpicker.setRotation(160);
     FragmentManager manager = getSupportFragmentManager();
 presetFragment = new EditPresetFragment();
 loadPresetFragment = new LoadPresetFragment();

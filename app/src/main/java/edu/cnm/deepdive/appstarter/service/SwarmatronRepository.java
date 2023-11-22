@@ -87,4 +87,11 @@ liveSwarm.setDronePitch(newPitch);
   }
 
 
+  public void changeFilterCutoff(float cutoff) {
+  liveSwarm.setCutoff(cutoff);
+  }
+
+  public void addNoise(float noiseamount) {
+  liveSwarm.setPinknoiselevel(noiseamount);
+  }
 }

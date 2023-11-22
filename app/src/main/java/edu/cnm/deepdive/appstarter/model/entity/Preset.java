@@ -14,10 +14,6 @@ import java.time.Instant;
     indices = {
         @Index(value = "preset_name", unique = true)
     }
-    //foreignKeys = {
-
-      //f  @ForeignKey(entity = User.class, parentColumns = "user_id", childColumns = "user_id", onDelete = ForeignKey.CASCADE)
-  //  }
 
 )
 public class Preset {
@@ -35,6 +31,8 @@ public class Preset {
     @ColumnInfo(name = "waveform_selection")
     private float waveFormSelection;
 
+    @ColumnInfo(name = "noiseamount")
+    private float noiseAmount;
     @NonNull
     private Instant created = Instant.MIN;
 
@@ -103,9 +101,18 @@ public class Preset {
         this.spreadRibbonPosition = spreadRibbonPosition;
     }
 
+    public float getNoiseAmount() {
+        return noiseAmount;
+    }
+
+    public void setNoiseAmount(float noiseAmount) {
+        this.noiseAmount = noiseAmount;
+    }
+
     @NonNull
     @Override
     public String toString() {
         return presetName;
     }
+
 }

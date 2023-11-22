@@ -43,6 +43,8 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
     preset.setFilterPosition(currentSwarm.getBusFilter());
     preset.setSpreadKnobPosition(currentSwarm.getCurrentSpreadrange());
     preset.setWaveFormSelection(currentSwarm.getWaveformSelection());
+    preset.setFilterPosition(currentSwarm.getBusFilter());
+    preset.setNoiseAmount(currentSwarm.getPinknoiselevel());
     repository.save(preset)
         .subscribe(
             presetId::postValue,

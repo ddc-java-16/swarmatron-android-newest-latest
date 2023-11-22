@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "4c6e55052f768f389ea9908cb508be35",
+    "identityHash": "1fc13d20b112807e638f81dfce458743",
     "entities": [
       {
         "tableName": "user",
@@ -48,7 +48,7 @@
       },
       {
         "tableName": "preset",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`preset_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` INTEGER NOT NULL, `preset_name` TEXT, `filter_position` REAL NOT NULL, `spread_ribbon_position` REAL NOT NULL, `waveform_selection` REAL NOT NULL, `created` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`preset_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `user_id` INTEGER NOT NULL, `preset_name` TEXT, `filter_position` REAL NOT NULL, `spread_ribbon_position` REAL NOT NULL, `waveform_selection` REAL NOT NULL, `noiseamount` REAL NOT NULL, `created` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -87,6 +87,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "noiseAmount",
+            "columnName": "noiseamount",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
             "fieldPath": "created",
             "columnName": "created",
             "affinity": "INTEGER",
@@ -116,7 +122,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4c6e55052f768f389ea9908cb508be35')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1fc13d20b112807e638f81dfce458743')"
     ]
   }
 }

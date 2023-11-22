@@ -42,6 +42,20 @@
     android:orientation="vertical"
     />
   <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/knobfilterline"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.698"
+    android:orientation="vertical"
+    />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/knobnoiseline"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    app:layout_constraintGuide_percent="0.816"
+    android:orientation="vertical"
+    />
+  <androidx.constraintlayout.widget.Guideline
     android:id="@+id/knobbaseline"
     android:layout_width="wrap_content"
     android:layout_height="0dp"
@@ -119,6 +133,28 @@
     app:layout_constraintHeight_percent="0.23"
     app:layout_constraintWidth_percent="0.23"
     android:src="@drawable/waveform_picker"/>
+  <ImageView
+    android:id="@+id/fiterpicker"
+    app:layout_constraintTop_toTopOf="@id/knobbaseline"
+    app:layout_constraintBottom_toBottomOf="@id/knobbaseline"
+    app:layout_constraintStart_toStartOf="@id/knobfilterline"
+    app:layout_constraintEnd_toEndOf="@id/knobfilterline"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintHeight_percent="0.16"
+    app:layout_constraintWidth_percent="0.16"
+    android:src="@drawable/filter_picker"/>
+  <ImageView
+    android:id="@+id/noisepicker"
+    app:layout_constraintTop_toTopOf="@id/knobbaseline"
+    app:layout_constraintBottom_toBottomOf="@id/knobbaseline"
+    app:layout_constraintStart_toStartOf="@id/knobnoiseline"
+    app:layout_constraintEnd_toEndOf="@id/knobnoiseline"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    app:layout_constraintHeight_percent="0.16"
+    app:layout_constraintWidth_percent="0.16"
+    android:src="@drawable/noise_picker"/>
   <com.google.android.material.slider.Slider
     android:id="@+id/waveformknob"
     app:layout_constraintTop_toTopOf="@id/knobbaseline"
@@ -130,13 +166,44 @@
     android:valueTo="4"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
-    android:rotation="-90"
+
     app:trackColor="@color/clear"
     app:thumbColor="@color/clear"
     app:haloColor="@color/clear"
     android:outlineSpotShadowColor="@color/clear"
     app:tickVisible="false"
     android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+  <com.google.android.material.slider.Slider
+    android:id="@+id/filterknob"
+    app:layout_constraintTop_toTopOf="@id/knobbaseline"
+    app:layout_constraintBottom_toBottomOf="@id/knobbaseline"
+    app:layout_constraintStart_toStartOf="@id/knobfilterline"
+    app:layout_constraintEnd_toEndOf="@id/knobfilterline"
+    android:valueFrom="1"
+    android:valueTo="1000"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    app:trackColor="@color/clear"
+    app:thumbColor="@color/clear"
+    app:haloColor="@color/clear"
+
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+  <com.google.android.material.slider.Slider
+    android:id="@+id/noiseknob"
+    app:layout_constraintTop_toTopOf="@id/knobbaseline"
+    app:layout_constraintBottom_toBottomOf="@id/knobbaseline"
+    app:layout_constraintStart_toStartOf="@id/knobnoiseline"
+    app:layout_constraintEnd_toEndOf="@id/knobnoiseline"
+    android:valueFrom="0"
+    android:valueTo="0.2"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    app:trackColor="@color/clear"
+    app:thumbColor="@color/clear"
+    app:haloColor="@color/clear"
+
+    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"/>
+
 
 
 
