@@ -48,9 +48,6 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
         .setView(binding.getRoot())
         .setPositiveButton(R.string.load, (dialog, id) -> dismiss())
         .setNegativeButton(R.string.delete, (dialog, id) -> {
-              viewModel.findPreset(presetId).observe(requireActivity(), (preset) -> viewModel.delete(preset));
-
-
           dismiss();
         })
         .create();
