@@ -1,6 +1,9 @@
 package edu.cnm.deepdive.appstarter.controller;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +15,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AlertDialog.Builder;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import dagger.hilt.android.AndroidEntryPoint;
+import edu.cnm.deepdive.appstarter.R;
 import edu.cnm.deepdive.appstarter.databinding.ActivityMainBinding;
 import edu.cnm.deepdive.appstarter.databinding.FragmentLoadPresetBinding;
 import edu.cnm.deepdive.appstarter.model.entity.Preset;
@@ -26,6 +31,7 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
   AlertDialog dialog;
   FragmentLoadPresetBinding binding;
   PresetViewModel viewModel;
+ long presetId;
   @NonNull
   @Override
   public Dialog onCreateDialog(
@@ -34,10 +40,25 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
     binding.presetlist.setOnItemClickListener((parent, view, position, id) -> {
       Preset preset = (Preset) parent.getItemAtPosition(position);
       viewModel.fetch(preset.getId());
-      dismiss();
+      presetId = preset.getId();
+      view.setBackgroundColor(Color.GRAY);
     });
     dialog = new Builder(requireContext())
+        .setTitle("Load Preset")
         .setView(binding.getRoot())
+        .setPositiveButton(R.string.load, new OnClickListener() {
+          public void onClick(DialogInterface dialog, int id) {
+            dismiss();
+          }
+        })
+        .setNegativeButton(R.string.delete, new OnClickListener() {
+          public void onClick(DialogInterface dialog, int id) {
+
+                viewModel.delete(presetId);
+
+            dismiss();
+          }
+        })
         .create();
     return dialog;
   }

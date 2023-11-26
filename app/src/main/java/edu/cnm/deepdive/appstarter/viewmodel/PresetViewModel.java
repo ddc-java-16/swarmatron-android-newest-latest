@@ -41,7 +41,7 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
   public Preset  save(Preset preset) {
     Swarm currentSwarm = swarmRepository.getLiveSwarm();
     preset.setFilterPosition(currentSwarm.getBusFilter());
-    preset.setSpreadKnobPosition(currentSwarm.getCurrentSpreadrange());
+    preset.setSpreadRibbonPosition(currentSwarm.getCurrentSpreadrange());
     preset.setWaveFormSelection(currentSwarm.getWaveformSelection());
     preset.setFilterPosition(currentSwarm.getBusFilter());
     preset.setNoiseAmount(currentSwarm.getPinknoiselevel());
@@ -84,5 +84,16 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
 
   public void fetch(long presetId) {
     this.presetId.postValue(presetId);
+  }
+
+  public void delete(Long presetId) {
+
+   repository
+       .delete(presetId)
+       .subscribe(
+           (integer) -> {},
+           this::postThrowable,
+           pending
+       );
   }
 }

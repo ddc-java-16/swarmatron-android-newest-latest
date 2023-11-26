@@ -28,19 +28,15 @@ public class MainActivity extends AppCompatActivity {
   EditPresetFragment presetFragment;
   LoadPresetFragment loadPresetFragment;
 
-  boolean swarmIsActive;
 
   OnSliderTouchListener activateListener = new OnSliderTouchListener() {
     @Override
     public void onStartTrackingTouch(@NonNull Slider slider) {
-      swarmIsActive = true;
-      swarmViewModel.setCenterPitch(binding.slider.getValue());
-      swarmViewModel.start();
     }
 
     @Override
     public void onStopTrackingTouch(@NonNull Slider slider) {
-swarmIsActive = false;
+
 swarmViewModel.stop();
     }
   };
@@ -49,18 +45,16 @@ swarmViewModel.stop();
     public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.spread(binding.spreadknob.getValue());
-      if(swarmIsActive) {
-      swarmViewModel.start();
-    }
+
+
   }};
   OnChangeListener sliderlistener = new OnChangeListener() {
     @Override
     public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.spread(binding.spreadknob.getValue());
-      if(swarmIsActive) {
         swarmViewModel.start();
-      }
+
     }
   };
   OnChangeListener waveformlistener = new OnChangeListener() {
@@ -71,7 +65,7 @@ swarmViewModel.stop();
       swarmViewModel.changeWaveform(binding.waveformknob.getValue());
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.changeFilterCutoff(binding.filterknob.getValue());
-      swarmViewModel.spread(waveform);
+      swarmViewModel.spread(binding.spreadknob.getValue());
       if(waveform == 1) {
         binding.waveformpicker.setRotation(-55);
       }
@@ -89,21 +83,21 @@ swarmViewModel.stop();
 
 
 
-      if(swarmIsActive) {
+
         swarmViewModel.start();
-      }
+
     }};
 
 OnChangeListener filterListener = new OnChangeListener() {
   @Override
   public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
 
-float anglecoefficient = binding.filterknob.getValue();
+float anglecoefficient = binding.filterknob.getValue() - 200;
     swarmViewModel.changeFilterCutoff(binding.filterknob.getValue());
   binding.fiterpicker.setRotation((float) (anglecoefficient* 0.18) - 45);
-    if(swarmIsActive) {
+
       swarmViewModel.start();
-    }
+
   }
 };
   OnChangeListener noiseListener = new OnChangeListener() {
@@ -113,9 +107,9 @@ float anglecoefficient = binding.filterknob.getValue();
       float anglecoefficient = binding.noiseknob.getValue();
       swarmViewModel.addnoise(binding.noiseknob.getValue());
       binding.noisepicker.setRotation((anglecoefficient *900)-45);
-      if(swarmIsActive) {
+
         swarmViewModel.start();
-      }
+
     }};
 
   @Override

@@ -1,6 +1,8 @@
 package edu.cnm.deepdive.appstarter.service;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import edu.cnm.deepdive.appstarter.model.dao.PresetDao;
 import edu.cnm.deepdive.appstarter.model.dao.UserDao;
@@ -8,6 +10,7 @@ import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.model.entity.User;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -65,14 +68,11 @@ public class PresetRepository {
   }
 
   //delete a single preset
-  public Completable delete(Preset preset) {
-    return (
-        (preset.getId() == 0)
-            ? Completable.complete()
-            : presetDao.delete(preset)
-                .ignoreElement()
-    )
-        .subscribeOn(Schedulers.io());
+  public Single<Integer> delete(Long presetId) {
+    Preset preset = new Preset();
+    preset.setId(presetId);
+     return presetDao.delete(preset);
+
   }
 
   public Single<Long> insert(Preset preset) {

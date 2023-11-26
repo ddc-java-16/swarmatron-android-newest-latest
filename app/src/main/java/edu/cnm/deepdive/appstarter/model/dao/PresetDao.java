@@ -7,7 +7,9 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 import edu.cnm.deepdive.appstarter.model.entity.Preset;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import java.util.List;
 @Dao
 public interface PresetDao {
@@ -18,7 +20,7 @@ public interface PresetDao {
   Single<Integer> update(Preset preset);
 
   @Delete
-Single<Integer> delete(Preset preset);
+ Single<Integer> delete(Preset preset);
 
   @Query("SELECT * FROM preset WHERE preset_id = :presetid")
 LiveData<Preset> select(Long presetid);

@@ -43,5 +43,7 @@
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="enter_preset_name">Enter Preset Name</string>
   <string name="preset_name">Preset Name</string>
+  <string name="load">LOAD</string>
+  <string name="delete">DELETE</string>
 
 </resources>
