@@ -3,6 +3,7 @@ package edu.cnm.deepdive.appstarter.viewmodel;
 import android.content.Context;
 import android.util.Log;
 import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -28,7 +29,8 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
 
 
   @Inject
-  PresetViewModel(@ApplicationContext Context context, PresetRepository repository, SwarmatronRepository swarmRepository) {
+  PresetViewModel(@ApplicationContext Context context, PresetRepository repository,
+      SwarmatronRepository swarmRepository) {
     this.swarmRepository = swarmRepository;
     this.repository = repository;
     presetId = new MutableLiveData<>();
@@ -38,7 +40,7 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
 
   }
 
-  public Preset  save(Preset preset) {
+  public Preset save(Preset preset) {
     Swarm currentSwarm = swarmRepository.getLiveSwarm();
     preset.setFilterPosition(currentSwarm.getBusFilter());
     preset.setSpreadRibbonPosition(currentSwarm.getCurrentSpreadrange());
@@ -54,12 +56,13 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
         );
     return preset;
   }
+
   public void load(Preset preset) {
     swarmRepository.loadSwarm(preset);
   }
 
-  public LiveData<List<Preset>> getAllPresets(){
-   return repository.getAll();
+  public LiveData<List<Preset>> getAllPresets() {
+    return repository.getAll();
   }
 
   public LiveData<Long> getPresetId() {
@@ -69,6 +72,7 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
   public LiveData<Preset> getPresetByName(String presetname) {
     return repository.getByName(presetname);
   }
+
   public LiveData<Preset> getPreset() {
     return preset;
   }
@@ -82,18 +86,16 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
     this.throwable.postValue(throwable);
   }
 
+  public LiveData<Preset> findPreset(long id) {
+    return repository.get(id);
+  }
+
   public void fetch(long presetId) {
     this.presetId.postValue(presetId);
   }
 
-  public void delete(Long presetId) {
+  public void delete(Preset preset) {
+    repository.delete(preset);
 
-   repository
-       .delete(presetId)
-       .subscribe(
-           (integer) -> {},
-           this::postThrowable,
-           pending
-       );
   }
 }

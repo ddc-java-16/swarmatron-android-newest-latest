@@ -19,7 +19,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class PresetRepository {
+public class PresetRepository{
 
 
   private final PresetDao presetDao;
@@ -68,10 +68,12 @@ public class PresetRepository {
   }
 
   //delete a single preset
-  public Single<Integer> delete(Long presetId) {
-    Preset preset = new Preset();
-    preset.setId(presetId);
-     return presetDao.delete(preset);
+  public void delete(Preset preset) {
+
+
+     presetDao.delete(preset);
+
+
 
   }
 
@@ -87,5 +89,6 @@ public class PresetRepository {
         .update(preset)
         .map((count) -> preset.getId());
   }
+
 
 }
