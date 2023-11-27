@@ -15,11 +15,11 @@ oscillate, recreating the sound of a swarm of bees.
 {: menu="Users" }
 
 * Musicians
+As a musician, I want to recreate the effect produces by these rare machines at home, for use in my own music.
+
+
 * Folks who like to make musical sounds for fun
-> As a musician, I want to recreate the effect produces by these rare machines at home, for use in my own music.
-
-
-    I am interested in this app because it produces a soothing tone, much like a singing bowl or handpan, which helps with meditation and can also
+I am interested in this app because it produces a soothing tone, much like a singing bowl or handpan, which helps with meditation and can also
 be a pleasant sound that can be easily manipulated by a non-musician.
 
 ## Functionality
