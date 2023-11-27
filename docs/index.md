@@ -26,25 +26,18 @@ be a pleasant sound that can be easily manipulated by a non-musician.
 
 The Swarmatron can be played by interacting with its two control ribbons.
 The first can be dragged right or left to raise or lower the swarm pitch.
-The second can be dragged right or left to choose a pedal tone, which persists after the user has let go of the ribbon.
-Combining a steady pedal tone with a melodic line on the Swarm produces a hypnotic texture reminiscent of the sitar or psychedelic music.
-The pitches that comprise the swarm tone can be spread apart from eachother using a virtual knob.
-The User can also control the waveform of the oscillators that comprise the swarm.
+The second can be dragged right or left to spread the frequencies in the cluster apart from each other, increasing the dissonance.
+The User can also control the waveform of the oscillators that comprise the swarm by turning the center knob.
+There are also knobs to control a lowpass filter and the addition of pink noise to the tone produced.
 
 ## Persistent data
 {: menu="Persistence" }
-
-* User
-    * Display name
-    * OAuth2.0 identifier
-    * Timestamp of first login to the app
   *Preset
     * Preset Name
     * Waveforms of oscillators
     * Spread knob position
-    * Filter position
-    * Volume position
-    * 
+    * Filter knob position
+    * Noise knob position
 ## Device/external services
 {: menu="Services" }
 

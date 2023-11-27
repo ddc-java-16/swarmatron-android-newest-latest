@@ -71,8 +71,7 @@ public class PresetRepository{
   //delete a single preset
   public void delete(Preset preset) {
 
-
-     presetDao.delete(preset);
+new deleteAsync(presetDao).execute(preset);
 
 
 
@@ -90,6 +89,18 @@ public class PresetRepository{
         .update(preset)
         .map((count) -> preset.getId());
   }
+private static class deleteAsync extends AsyncTask<Preset, Void, Void> {
+    private PresetDao intermediate;
+    deleteAsync(PresetDao dao){
+      intermediate = dao;
 
+    }
+
+  @Override
+  protected Void doInBackground(final Preset... presets) {
+    intermediate.delete(presets[0]);
+    return null;
+  }
+}
 
 }
