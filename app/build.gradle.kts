@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 import java.io.FileInputStream
-import java.util.Properties
+import java.util.*
 
 plugins {
     alias(libs.plugins.android.application)
@@ -186,22 +186,80 @@ roomDdl {
     destination.set(project.file("$projectDir/../docs/sql/ddl.sql"))
 }
 
-fun getLocalProperty(name: String): String? {
-    return getProperty("$projectDir/local.properties".toString(), name)
-}
-
-fun getProperty(filename: String, name: String): String? {
-    return try {
-        FileInputStream(filename).use {
-            val props = Properties()
-            props.load(it)
-            props.getProperty(name)
+android.applicationVariants.configureEach {
+    val simpleName = name
+    val variantName = name.replaceFirstChar {
+        if (it.isLowerCase()) {
+            it.titlecase(Locale.getDefault())
+        } else {
+            it.toString()
         }
-    } catch (e: Throwable) {
-        null
     }
-}
 
-fun quoted(input: String): String {
-    return "\"$input\""
+    val task = project.tasks.create("generate${variantName}Javadoc", Javadoc::class.java) {
+        title = "${project.property("appName")} (${android.defaultConfig.versionName})"
+        group = "ApiDoc"
+        description = "generates Javadoc for $variantName"
+
+        source = javaCompileProvider.get().source
+
+        doFirst {
+            classpath = project.files(
+                    projectDir
+                            .toPath()
+                            .resolve("build/intermediates/javac/${simpleName}/classes"),
+                    javaCompileProvider.get().classpath.files,
+                    android.bootClasspath
+            )
+        }
+
+        exclude(
+                "**/R",
+                "**/R.**",
+                "**/R\$**",
+                "**/BuildConfig*"
+        )
+        setDestinationDir(file("$projectDir/../docs/api"))
+
+        with(options as StandardJavadocDocletOptions) {
+            windowTitle = "${project.property("appName")} (${android.defaultConfig.versionName})"
+            memberLevel = JavadocMemberLevel.PROTECTED
+            isLinkSource = true
+            isAuthor = false
+            links(
+
+                    "https://docs.oracle.com/en/java/javase/${libs.versions.java.get()}/docs/api/",
+                    "https://reactivex.io/RxJava/3.x/javadoc/",
+                    "https://javadoc.io/doc/com.google.dagger/dagger/${libs.versions.hilt.get()}/",
+                    "https://www.softsynth.com/jsyn/docs/javadocs/"
+            )
+            linksOffline("https://developer.android.com/reference", "$projectDir/..")
+            addBooleanOption("html5", true)
+            addStringOption("Xdoclint:none", "-quiet")
+        }
+        isFailOnError = true
+    }
+    task.dependsOn("assemble$variantName")
+    //tasks["generateApiDoc"].dependsOn(task)
 }
+    fun getLocalProperty(name: String): String? {
+        return getProperty("$projectDir/local.properties".toString(), name)
+    }
+
+
+    fun getProperty(filename: String, name: String): String? {
+        return try {
+            FileInputStream(filename).use {
+                val props = Properties()
+                props.load(it)
+                props.getProperty(name)
+            }
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
+    fun quoted(input: String): String {
+        return "\"$input\""
+    }
+

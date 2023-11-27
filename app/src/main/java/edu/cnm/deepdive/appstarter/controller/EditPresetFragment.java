@@ -46,15 +46,19 @@ public class EditPresetFragment extends DialogFragment {
     binding.savebutton.setOnClickListener((v) -> {
       preset = new Preset();
       preset.setPresetName(String.valueOf(binding.presetname.getText()));
+    preset.setSpreadRibbonPosition(mainbinding.spreadknob.getValue());
+    preset.setWaveFormSelection(mainbinding.waveformknob.getValue());
+    preset.setFilterPosition(mainbinding.filterknob.getValue());
+    preset.setNoiseAmount(mainbinding.noiseknob.getValue());
       viewModel.save(preset);
-      viewModel.getPresetByName(preset.getPresetName()).observe(this, preset -> {
+      /*viewModel.getPresetByName(preset.getPresetName()).observe(this, preset -> {
         Log.d(getClass().getSimpleName(), preset.toString());
         mainbinding.waveformknob.setValue(preset.getWaveFormSelection());
         mainbinding.spreadknob.setValue(preset.getSpreadKnobPosition());
           }
 
       );
-
+*/
       dismiss();
     });
     return dialog;

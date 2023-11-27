@@ -14,7 +14,6 @@ import edu.cnm.deepdive.appstarter.model.entity.Preset;
 import edu.cnm.deepdive.appstarter.service.PresetRepository;
 import edu.cnm.deepdive.appstarter.service.SwarmatronRepository;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import edu.cnm.deepdive.appstarter.model.Swarm;
 import java.util.List;
 import javax.inject.Inject;
 @HiltViewModel
@@ -41,12 +40,7 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
   }
 
   public Preset save(Preset preset) {
-    Swarm currentSwarm = swarmRepository.getLiveSwarm();
-    preset.setFilterPosition(currentSwarm.getBusFilter());
-    preset.setSpreadRibbonPosition(currentSwarm.getCurrentSpreadrange());
-    preset.setWaveFormSelection(currentSwarm.getWaveformSelection());
-    preset.setFilterPosition(currentSwarm.getBusFilter());
-    preset.setNoiseAmount(currentSwarm.getPinknoiselevel());
+
     repository.save(preset)
         .subscribe(
             presetId::postValue,
@@ -95,7 +89,12 @@ public class PresetViewModel extends ViewModel implements DefaultLifecycleObserv
   }
 
   public void delete(Preset preset) {
-    repository.delete(preset);
+    repository.delete(preset)
+        .subscribe(
+            () -> {},
+            this::postThrowable,
+            pending
+        );
 
   }
 }

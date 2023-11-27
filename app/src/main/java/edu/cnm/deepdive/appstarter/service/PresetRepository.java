@@ -69,9 +69,12 @@ public class PresetRepository{
   }
 
   //delete a single preset
-  public void delete(Preset preset) {
+  public Completable delete(Preset preset) {
+return presetDao
+    .delete(preset)
+    .subscribeOn(Schedulers.io())
+    .ignoreElement();
 
-new deleteAsync(presetDao).execute(preset);
 
 
 

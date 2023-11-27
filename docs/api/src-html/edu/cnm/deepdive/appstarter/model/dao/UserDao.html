@@ -45,7 +45,7 @@
 <span class="source-line-no">032</span><span id="line-32"> * {@code DELETE} operations are implemented as ReactiveX {@link Single} tasks, which execute on</span>
 <span class="source-line-no">033</span><span id="line-33"> * subscription; some {@code SELECT} tasks are implemented using {@link LiveData} queries, which</span>
 <span class="source-line-no">034</span><span id="line-34"> * execute on observation, or (if already being observed) on Room-based updates to the underlying</span>
-<span class="source-line-no">035</span><span id="line-35"> * tables; one {@code SELECT} ({@link #select(String)}) is implemented as a ReactiveX {@link Maybe}</span>
+<span class="source-line-no">035</span><span id="line-35"> * tables; one {@code SELECT} ({@link #(String)}) is implemented as a ReactiveX {@link Maybe}</span>
 <span class="source-line-no">036</span><span id="line-36"> * task, to allow for the appropriate handling of an empty query result.</span>
 <span class="source-line-no">037</span><span id="line-37"> */</span>
 <span class="source-line-no">038</span><span id="line-38">@SuppressWarnings("unused")</span>
@@ -176,18 +176,24 @@
 <span class="source-line-no">163</span><span id="line-163">   * @return {@link Maybe} that can be executed (subscribed to) to obtain the {@link User} instance</span>
 <span class="source-line-no">164</span><span id="line-164">   * of interest.</span>
 <span class="source-line-no">165</span><span id="line-165">   */</span>
-<span class="source-line-no">166</span><span id="line-166">  @Query("SELECT * FROM user WHERE oauth_key = :oauthKey")</span>
-<span class="source-line-no">167</span><span id="line-167">  Maybe&lt;User&gt; select(String oauthKey);</span>
-<span class="source-line-no">168</span><span id="line-168"></span>
-<span class="source-line-no">169</span><span id="line-169">  /**</span>
+<span class="source-line-no">166</span><span id="line-166">  /**</span>
+<span class="source-line-no">167</span><span id="line-167">  @Query("SELECT * FROM user WHERE oauth_key = :oauthKey")</span>
+<span class="source-line-no">168</span><span id="line-168">  Maybe&lt;User&gt; select(String oauthKey);</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
 <span class="source-line-no">170</span><span id="line-170">   * Constructs and returns a {@link LiveData}-based query of all {@link User} instances, sorted by</span>
 <span class="source-line-no">171</span><span id="line-171">   * display name. When observed (or when the contents of the {@code user} table are modified using</span>
 <span class="source-line-no">172</span><span id="line-172">   * Room methods), the query is executed.</span>
 <span class="source-line-no">173</span><span id="line-173">   */</span>
-<span class="source-line-no">174</span><span id="line-174">  @Query("SELECT * FROM user ORDER BY display_name ASC")</span>
-<span class="source-line-no">175</span><span id="line-175">  LiveData&lt;List&lt;User&gt;&gt; select();</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175"></span>
 <span class="source-line-no">176</span><span id="line-176"></span>
-<span class="source-line-no">177</span><span id="line-177">}</span>
+<span class="source-line-no">177</span><span id="line-177">  @Query("SELECT * FROM user WHERE display_name LIKE :pattern")</span>
+<span class="source-line-no">178</span><span id="line-178">  LiveData&lt;List&lt;User&gt;&gt; selectByFragment(String pattern);</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">  @Query("SELECT * FROM user ORDER BY display_name ASC")</span>
+<span class="source-line-no">181</span><span id="line-181">  LiveData&lt;List&lt;User&gt;&gt; select();</span>
+<span class="source-line-no">182</span><span id="line-182"></span>
+<span class="source-line-no">183</span><span id="line-183">}</span>
 
 
 

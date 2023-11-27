@@ -31,6 +31,8 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
   AlertDialog dialog;
   FragmentLoadPresetBinding binding;
   PresetViewModel viewModel;
+
+  private Preset preset;
  long presetId;
   @NonNull
   @Override
@@ -38,18 +40,18 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
       @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
     binding = FragmentLoadPresetBinding.inflate(getLayoutInflater(), null, false);
     binding.presetlist.setOnItemClickListener((parent, view, position, id) -> {
-      Preset preset = (Preset) parent.getItemAtPosition(position);
-      viewModel.fetch(preset.getId());
-      presetId = preset.getId();
+      preset = (Preset) parent.getItemAtPosition(position);
       view.setBackgroundColor(Color.GRAY);
     });
     dialog = new Builder(requireContext())
         .setTitle("Load Preset")
         .setView(binding.getRoot())
-        .setPositiveButton(R.string.load, (dialog, id) -> dismiss())
-        .setNegativeButton(R.string.delete, (dialog, id) -> {
-          dismiss();
+        .setPositiveButton(R.string.load, (dialog, id) -> {
+          viewModel.fetch(preset.getId());
+          presetId = preset.getId();
         })
+        .setNegativeButton(R.string.delete, (dialog, id) ->
+            viewModel.delete(preset))
         .create();
     return dialog;
   }

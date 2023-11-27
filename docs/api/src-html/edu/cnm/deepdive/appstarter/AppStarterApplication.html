@@ -29,24 +29,23 @@
 <span class="source-line-no">016</span><span id="line-16">package edu.cnm.deepdive.appstarter;</span>
 <span class="source-line-no">017</span><span id="line-17"></span>
 <span class="source-line-no">018</span><span id="line-18">import android.app.Application;</span>
-<span class="source-line-no">019</span><span id="line-19">import com.facebook.stetho.Stetho;</span>
-<span class="source-line-no">020</span><span id="line-20">import dagger.hilt.android.HiltAndroidApp;</span>
-<span class="source-line-no">021</span><span id="line-21"></span>
-<span class="source-line-no">022</span><span id="line-22">/**</span>
-<span class="source-line-no">023</span><span id="line-23"> * Initializes (in the {@link #onCreate()} method) application-level resources that cannot be</span>
-<span class="source-line-no">024</span><span id="line-24"> * handled with Hilt dependency injection. This class &lt;strong&gt;must&lt;/strong&gt; be referenced in</span>
-<span class="source-line-no">025</span><span id="line-25"> * {@code AndroidManifest.xml}, or it will not be loaded and used by the Android system.</span>
-<span class="source-line-no">026</span><span id="line-26"> */</span>
-<span class="source-line-no">027</span><span id="line-27">@HiltAndroidApp</span>
-<span class="source-line-no">028</span><span id="line-28">public class AppStarterApplication extends Application {</span>
-<span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">  @Override</span>
-<span class="source-line-no">031</span><span id="line-31">  public void onCreate() {</span>
-<span class="source-line-no">032</span><span id="line-32">    super.onCreate();</span>
-<span class="source-line-no">033</span><span id="line-33">    Stetho.initializeWithDefaults(this);</span>
-<span class="source-line-no">034</span><span id="line-34">  }</span>
-<span class="source-line-no">035</span><span id="line-35"></span>
-<span class="source-line-no">036</span><span id="line-36">}</span>
+<span class="source-line-no">019</span><span id="line-19">import dagger.hilt.android.HiltAndroidApp;</span>
+<span class="source-line-no">020</span><span id="line-20"></span>
+<span class="source-line-no">021</span><span id="line-21">/**</span>
+<span class="source-line-no">022</span><span id="line-22"> * Initializes (in the {@link #onCreate()} method) application-level resources that cannot be</span>
+<span class="source-line-no">023</span><span id="line-23"> * handled with Hilt dependency injection. This class &lt;strong&gt;must&lt;/strong&gt; be referenced in</span>
+<span class="source-line-no">024</span><span id="line-24"> * {@code AndroidManifest.xml}, or it will not be loaded and used by the Android system.</span>
+<span class="source-line-no">025</span><span id="line-25"> */</span>
+<span class="source-line-no">026</span><span id="line-26">@HiltAndroidApp</span>
+<span class="source-line-no">027</span><span id="line-27">public class AppStarterApplication extends Application {</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">  @Override</span>
+<span class="source-line-no">030</span><span id="line-30">  public void onCreate() {</span>
+<span class="source-line-no">031</span><span id="line-31">    super.onCreate();</span>
+<span class="source-line-no">032</span><span id="line-32">  }</span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34"></span>
+<span class="source-line-no">035</span><span id="line-35">}</span>
 
 
 

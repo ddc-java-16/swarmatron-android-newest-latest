@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
   EditPresetFragment presetFragment;
   LoadPresetFragment loadPresetFragment;
 
+  boolean active;
+
 
   OnSliderTouchListener activateListener = new OnSliderTouchListener() {
     @Override
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStopTrackingTouch(@NonNull Slider slider) {
-
+active = false;
 swarmViewModel.stop();
     }
   };
@@ -45,6 +47,10 @@ swarmViewModel.stop();
     public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.spread(binding.spreadknob.getValue());
+      if(active) {
+        swarmViewModel.start();
+      }
+
 
 
   }};
@@ -53,6 +59,7 @@ swarmViewModel.stop();
     public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
       swarmViewModel.setCenterPitch(binding.slider.getValue());
       swarmViewModel.spread(binding.spreadknob.getValue());
+      active = true;
         swarmViewModel.start();
 
     }

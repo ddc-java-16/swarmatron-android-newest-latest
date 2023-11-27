@@ -11,122 +11,180 @@
 <body class="source-page">
 <main role="main">
 <div class="source-container">
-<pre><span class="source-line-no">001</span><span id="line-1">/*</span>
-<span class="source-line-no">002</span><span id="line-2"> *  Copyright 2023 CNM Ingenuity, Inc.</span>
-<span class="source-line-no">003</span><span id="line-3"> *</span>
-<span class="source-line-no">004</span><span id="line-4"> *  Licensed under the Apache License, Version 2.0 (the "License");</span>
-<span class="source-line-no">005</span><span id="line-5"> *  you may not use this file except in compliance with the License.</span>
-<span class="source-line-no">006</span><span id="line-6"> *  You may obtain a copy of the License at</span>
-<span class="source-line-no">007</span><span id="line-7"> *</span>
-<span class="source-line-no">008</span><span id="line-8"> *      http://www.apache.org/licenses/LICENSE-2.0</span>
-<span class="source-line-no">009</span><span id="line-9"> *</span>
-<span class="source-line-no">010</span><span id="line-10"> *  Unless required by applicable law or agreed to in writing, software</span>
-<span class="source-line-no">011</span><span id="line-11"> *  distributed under the License is distributed on an "AS IS" BASIS,</span>
-<span class="source-line-no">012</span><span id="line-12"> *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
-<span class="source-line-no">013</span><span id="line-13"> *  See the License for the specific language governing permissions and</span>
-<span class="source-line-no">014</span><span id="line-14"> *  limitations under the License.</span>
-<span class="source-line-no">015</span><span id="line-15"> */</span>
-<span class="source-line-no">016</span><span id="line-16">package edu.cnm.deepdive.appstarter.controller;</span>
-<span class="source-line-no">017</span><span id="line-17"></span>
-<span class="source-line-no">018</span><span id="line-18">import android.content.Intent;</span>
-<span class="source-line-no">019</span><span id="line-19">import android.os.Bundle;</span>
-<span class="source-line-no">020</span><span id="line-20">import android.view.Menu;</span>
-<span class="source-line-no">021</span><span id="line-21">import android.view.MenuItem;</span>
-<span class="source-line-no">022</span><span id="line-22">import androidx.annotation.NonNull;</span>
-<span class="source-line-no">023</span><span id="line-23">import androidx.appcompat.app.AppCompatActivity;</span>
-<span class="source-line-no">024</span><span id="line-24">import androidx.lifecycle.ViewModelProvider;</span>
-<span class="source-line-no">025</span><span id="line-25">import androidx.navigation.fragment.NavHostFragment;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.google.android.gms.auth.api.signin.GoogleSignInAccount;</span>
-<span class="source-line-no">027</span><span id="line-27">import dagger.hilt.android.AndroidEntryPoint;</span>
-<span class="source-line-no">028</span><span id="line-28">import edu.cnm.deepdive.appstarter.R;</span>
-<span class="source-line-no">029</span><span id="line-29">import edu.cnm.deepdive.appstarter.viewmodel.LoginViewModel;</span>
-<span class="source-line-no">030</span><span id="line-30">import edu.cnm.deepdive.appstarter.viewmodel.PermissionsViewModel;</span>
-<span class="source-line-no">031</span><span id="line-31"></span>
-<span class="source-line-no">032</span><span id="line-32">/**</span>
-<span class="source-line-no">033</span><span id="line-33"> * Serves as a basic container activity&amp;mdash;that is, it presents no UI elements of its own (apart</span>
-<span class="source-line-no">034</span><span id="line-34"> * from an options menu), but hosts a {@link androidx.navigation.fragment.NavHostFragment} for</span>
-<span class="source-line-no">035</span><span id="line-35"> * presentation of one or more {@link androidx.fragment.app.Fragment} instances, associated with a</span>
-<span class="source-line-no">036</span><span id="line-36"> * navigation graph.</span>
-<span class="source-line-no">037</span><span id="line-37"> * &lt;p&gt;In addition to the navigation host role, this activity demonstrates the</span>
-<span class="source-line-no">038</span><span id="line-38"> * handling of:&lt;/p&gt;</span>
-<span class="source-line-no">039</span><span id="line-39"> * &lt;ul&gt;&lt;li&gt;&lt;p&gt;user sign-out (initiated by selection of an options menu item), with automatic</span>
-<span class="source-line-no">040</span><span id="line-40"> * navigation back to {@link LoginActivity} on completion of the sign-out;&lt;/p&gt;&lt;/li&gt;</span>
-<span class="source-line-no">041</span><span id="line-41"> * &lt;li&gt;&lt;p&gt;user-initiated navigation to {@link SettingsActivity};&lt;/p&gt;&lt;/li&gt;</span>
-<span class="source-line-no">042</span><span id="line-42"> * &lt;li&gt;&lt;p&gt;updates of UI {@link android.view.View} widget properties based on preference values</span>
-<span class="source-line-no">043</span><span id="line-43"> * (obtained from {@link edu.cnm.deepdive.appstarter.viewmodel.PreferencesViewModel});&lt;/p&gt;&lt;/li&gt;</span>
-<span class="source-line-no">044</span><span id="line-44"> * &lt;li&gt;&lt;p&gt;key events in the permissions request flow.&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;</span>
-<span class="source-line-no">045</span><span id="line-45"> */</span>
-<span class="source-line-no">046</span><span id="line-46">@AndroidEntryPoint</span>
-<span class="source-line-no">047</span><span id="line-47">public class MainActivity extends AppCompatActivity implements</span>
-<span class="source-line-no">048</span><span id="line-48">    PermissionsExplanationFragment.OnAcknowledgeListener {</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">  private LoginViewModel loginViewModel;</span>
-<span class="source-line-no">051</span><span id="line-51">  private PermissionsViewModel permissionsViewModel;</span>
-<span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">  @Override</span>
-<span class="source-line-no">054</span><span id="line-54">  protected void onCreate(Bundle savedInstanceState) {</span>
-<span class="source-line-no">055</span><span id="line-55">    super.onCreate(savedInstanceState);</span>
-<span class="source-line-no">056</span><span id="line-56">    setContentView(R.layout.activity_main);</span>
-<span class="source-line-no">057</span><span id="line-57">    setupViewModels();</span>
-<span class="source-line-no">058</span><span id="line-58">  }</span>
-<span class="source-line-no">059</span><span id="line-59"></span>
-<span class="source-line-no">060</span><span id="line-60">  @Override</span>
-<span class="source-line-no">061</span><span id="line-61">  public boolean onCreateOptionsMenu(Menu menu) {</span>
-<span class="source-line-no">062</span><span id="line-62">    super.onCreateOptionsMenu(menu);</span>
-<span class="source-line-no">063</span><span id="line-63">    getMenuInflater().inflate(R.menu.main_options, menu);</span>
-<span class="source-line-no">064</span><span id="line-64">    return true;</span>
-<span class="source-line-no">065</span><span id="line-65">  }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">  @Override</span>
-<span class="source-line-no">068</span><span id="line-68">  public boolean onOptionsItemSelected(@NonNull MenuItem item) {</span>
-<span class="source-line-no">069</span><span id="line-69">    boolean handled = true;</span>
-<span class="source-line-no">070</span><span id="line-70">    int itemId = item.getItemId();</span>
-<span class="source-line-no">071</span><span id="line-71">    if (itemId == R.id.settings) {</span>
-<span class="source-line-no">072</span><span id="line-72">      Intent intent = new Intent(this, SettingsActivity.class);</span>
-<span class="source-line-no">073</span><span id="line-73">      startActivity(intent);</span>
-<span class="source-line-no">074</span><span id="line-74">    } else if (itemId == R.id.sign_out) {</span>
-<span class="source-line-no">075</span><span id="line-75">      loginViewModel.signOut();</span>
-<span class="source-line-no">076</span><span id="line-76">    } else {</span>
-<span class="source-line-no">077</span><span id="line-77">      handled = super.onOptionsItemSelected(item);</span>
-<span class="source-line-no">078</span><span id="line-78">    }</span>
-<span class="source-line-no">079</span><span id="line-79">    return handled;</span>
-<span class="source-line-no">080</span><span id="line-80">  }</span>
-<span class="source-line-no">081</span><span id="line-81"></span>
-<span class="source-line-no">082</span><span id="line-82">  @Override</span>
-<span class="source-line-no">083</span><span id="line-83">  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,</span>
-<span class="source-line-no">084</span><span id="line-84">      @NonNull int[] grantResults) {</span>
-<span class="source-line-no">085</span><span id="line-85">    if (!permissionsViewModel.handlePermissionsRequestResult(requestCode, permissions,</span>
-<span class="source-line-no">086</span><span id="line-86">        grantResults)) {</span>
-<span class="source-line-no">087</span><span id="line-87">      super.onRequestPermissionsResult(requestCode, permissions, grantResults);</span>
-<span class="source-line-no">088</span><span id="line-88">    }</span>
-<span class="source-line-no">089</span><span id="line-89">  }</span>
+<pre><span class="source-line-no">001</span><span id="line-1">package edu.cnm.deepdive.appstarter.controller;</span>
+<span class="source-line-no">002</span><span id="line-2"></span>
+<span class="source-line-no">003</span><span id="line-3"></span>
+<span class="source-line-no">004</span><span id="line-4">import android.os.Bundle;</span>
+<span class="source-line-no">005</span><span id="line-5">import android.util.Log;</span>
+<span class="source-line-no">006</span><span id="line-6">import android.view.View.OnTouchListener;</span>
+<span class="source-line-no">007</span><span id="line-7">import androidx.annotation.NonNull;</span>
+<span class="source-line-no">008</span><span id="line-8">import androidx.annotation.Nullable;</span>
+<span class="source-line-no">009</span><span id="line-9">import androidx.appcompat.app.AppCompatActivity;</span>
+<span class="source-line-no">010</span><span id="line-10">import androidx.fragment.app.FragmentManager;</span>
+<span class="source-line-no">011</span><span id="line-11">import androidx.lifecycle.ViewModelProvider;</span>
+<span class="source-line-no">012</span><span id="line-12">import com.google.android.material.slider.Slider;</span>
+<span class="source-line-no">013</span><span id="line-13">import com.google.android.material.slider.Slider.OnChangeListener;</span>
+<span class="source-line-no">014</span><span id="line-14">import com.google.android.material.slider.Slider.OnSliderTouchListener;</span>
+<span class="source-line-no">015</span><span id="line-15">import dagger.hilt.android.AndroidEntryPoint;</span>
+<span class="source-line-no">016</span><span id="line-16">import edu.cnm.deepdive.appstarter.databinding.ActivityMainBinding;</span>
+<span class="source-line-no">017</span><span id="line-17">import edu.cnm.deepdive.appstarter.databinding.FragmentLoadPresetBinding;</span>
+<span class="source-line-no">018</span><span id="line-18">import edu.cnm.deepdive.appstarter.viewmodel.PresetViewModel;</span>
+<span class="source-line-no">019</span><span id="line-19">import edu.cnm.deepdive.appstarter.viewmodel.SwarmatronViewModel;</span>
+<span class="source-line-no">020</span><span id="line-20">import org.jetbrains.annotations.NotNull;</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22">@AndroidEntryPoint</span>
+<span class="source-line-no">023</span><span id="line-23">public class MainActivity extends AppCompatActivity {</span>
+<span class="source-line-no">024</span><span id="line-24">  SwarmatronViewModel swarmViewModel;</span>
+<span class="source-line-no">025</span><span id="line-25">  PresetViewModel presetViewModel;</span>
+<span class="source-line-no">026</span><span id="line-26">  ActivityMainBinding binding;</span>
+<span class="source-line-no">027</span><span id="line-27">  FragmentLoadPresetBinding presetbinding;</span>
+<span class="source-line-no">028</span><span id="line-28">  EditPresetFragment presetFragment;</span>
+<span class="source-line-no">029</span><span id="line-29">  LoadPresetFragment loadPresetFragment;</span>
+<span class="source-line-no">030</span><span id="line-30"></span>
+<span class="source-line-no">031</span><span id="line-31">  boolean active;</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33"></span>
+<span class="source-line-no">034</span><span id="line-34">  OnSliderTouchListener activateListener = new OnSliderTouchListener() {</span>
+<span class="source-line-no">035</span><span id="line-35">    @Override</span>
+<span class="source-line-no">036</span><span id="line-36">    public void onStartTrackingTouch(@NonNull Slider slider) {</span>
+<span class="source-line-no">037</span><span id="line-37">    }</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    @Override</span>
+<span class="source-line-no">040</span><span id="line-40">    public void onStopTrackingTouch(@NonNull Slider slider) {</span>
+<span class="source-line-no">041</span><span id="line-41">active = false;</span>
+<span class="source-line-no">042</span><span id="line-42">swarmViewModel.stop();</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44">  };</span>
+<span class="source-line-no">045</span><span id="line-45">  OnChangeListener spreadlistener = new OnChangeListener() {</span>
+<span class="source-line-no">046</span><span id="line-46">    @Override</span>
+<span class="source-line-no">047</span><span id="line-47">    public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {</span>
+<span class="source-line-no">048</span><span id="line-48">      swarmViewModel.setCenterPitch(binding.slider.getValue());</span>
+<span class="source-line-no">049</span><span id="line-49">      swarmViewModel.spread(binding.spreadknob.getValue());</span>
+<span class="source-line-no">050</span><span id="line-50">      if(active) {</span>
+<span class="source-line-no">051</span><span id="line-51">        swarmViewModel.start();</span>
+<span class="source-line-no">052</span><span id="line-52">      }</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54"></span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">  }};</span>
+<span class="source-line-no">057</span><span id="line-57">  OnChangeListener sliderlistener = new OnChangeListener() {</span>
+<span class="source-line-no">058</span><span id="line-58">    @Override</span>
+<span class="source-line-no">059</span><span id="line-59">    public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {</span>
+<span class="source-line-no">060</span><span id="line-60">      swarmViewModel.setCenterPitch(binding.slider.getValue());</span>
+<span class="source-line-no">061</span><span id="line-61">      swarmViewModel.spread(binding.spreadknob.getValue());</span>
+<span class="source-line-no">062</span><span id="line-62">      active = true;</span>
+<span class="source-line-no">063</span><span id="line-63">        swarmViewModel.start();</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    }</span>
+<span class="source-line-no">066</span><span id="line-66">  };</span>
+<span class="source-line-no">067</span><span id="line-67">  OnChangeListener waveformlistener = new OnChangeListener() {</span>
+<span class="source-line-no">068</span><span id="line-68">    @Override</span>
+<span class="source-line-no">069</span><span id="line-69">    public void onValueChange(@NonNull @NotNull Slider slider, float value, boolean fromUser) {</span>
+<span class="source-line-no">070</span><span id="line-70">     swarmViewModel.stop();</span>
+<span class="source-line-no">071</span><span id="line-71">     int waveform = (int) binding.waveformknob.getValue();</span>
+<span class="source-line-no">072</span><span id="line-72">      swarmViewModel.changeWaveform(binding.waveformknob.getValue());</span>
+<span class="source-line-no">073</span><span id="line-73">      swarmViewModel.setCenterPitch(binding.slider.getValue());</span>
+<span class="source-line-no">074</span><span id="line-74">      swarmViewModel.changeFilterCutoff(binding.filterknob.getValue());</span>
+<span class="source-line-no">075</span><span id="line-75">      swarmViewModel.spread(binding.spreadknob.getValue());</span>
+<span class="source-line-no">076</span><span id="line-76">      if(waveform == 1) {</span>
+<span class="source-line-no">077</span><span id="line-77">        binding.waveformpicker.setRotation(-55);</span>
+<span class="source-line-no">078</span><span id="line-78">      }</span>
+<span class="source-line-no">079</span><span id="line-79">      if(waveform == 2) {</span>
+<span class="source-line-no">080</span><span id="line-80">        binding.waveformpicker.setRotation(0);</span>
+<span class="source-line-no">081</span><span id="line-81">      }</span>
+<span class="source-line-no">082</span><span id="line-82">      if(waveform == 3) {</span>
+<span class="source-line-no">083</span><span id="line-83">        binding.waveformpicker.setRotation(90);</span>
+<span class="source-line-no">084</span><span id="line-84">      }</span>
+<span class="source-line-no">085</span><span id="line-85">      if(waveform == 4) {</span>
+<span class="source-line-no">086</span><span id="line-86">        binding.waveformpicker.setRotation(160);</span>
+<span class="source-line-no">087</span><span id="line-87">      }</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89"></span>
 <span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">  @Override</span>
-<span class="source-line-no">092</span><span id="line-92">  public void onAcknowledge(String[] permissions) {</span>
-<span class="source-line-no">093</span><span id="line-93">    permissionsViewModel.requestPermissions(this, permissions);</span>
-<span class="source-line-no">094</span><span id="line-94">  }</span>
+<span class="source-line-no">091</span><span id="line-91"></span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">        swarmViewModel.start();</span>
 <span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">  private void setupViewModels() {</span>
-<span class="source-line-no">097</span><span id="line-97">    loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);</span>
-<span class="source-line-no">098</span><span id="line-98">    loginViewModel</span>
-<span class="source-line-no">099</span><span id="line-99">        .getAccount()</span>
-<span class="source-line-no">100</span><span id="line-100">        .observe(this, this::handleAccount);</span>
-<span class="source-line-no">101</span><span id="line-101">    permissionsViewModel = new ViewModelProvider(this).get(PermissionsViewModel.class);</span>
-<span class="source-line-no">102</span><span id="line-102">    NavHostFragment navHostFragment =</span>
-<span class="source-line-no">103</span><span id="line-103">        (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);</span>
-<span class="source-line-no">104</span><span id="line-104">    //noinspection DataFlowIssue</span>
-<span class="source-line-no">105</span><span id="line-105">    permissionsViewModel.startPermissionsCheck(this, navHostFragment.getNavController());</span>
-<span class="source-line-no">106</span><span id="line-106">  }</span>
+<span class="source-line-no">096</span><span id="line-96">    }};</span>
+<span class="source-line-no">097</span><span id="line-97"></span>
+<span class="source-line-no">098</span><span id="line-98">OnChangeListener filterListener = new OnChangeListener() {</span>
+<span class="source-line-no">099</span><span id="line-99">  @Override</span>
+<span class="source-line-no">100</span><span id="line-100">  public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {</span>
+<span class="source-line-no">101</span><span id="line-101"></span>
+<span class="source-line-no">102</span><span id="line-102">float anglecoefficient = binding.filterknob.getValue() - 200;</span>
+<span class="source-line-no">103</span><span id="line-103">    swarmViewModel.changeFilterCutoff(binding.filterknob.getValue());</span>
+<span class="source-line-no">104</span><span id="line-104">  binding.fiterpicker.setRotation((float) (anglecoefficient* 0.18) - 45);</span>
+<span class="source-line-no">105</span><span id="line-105"></span>
+<span class="source-line-no">106</span><span id="line-106">      swarmViewModel.start();</span>
 <span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">  private void handleAccount(GoogleSignInAccount account) {</span>
-<span class="source-line-no">109</span><span id="line-109">    if (account == null) {</span>
-<span class="source-line-no">110</span><span id="line-110">      Intent intent = new Intent(this, LoginActivity.class)</span>
-<span class="source-line-no">111</span><span id="line-111">          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);</span>
-<span class="source-line-no">112</span><span id="line-112">      startActivity(intent);</span>
-<span class="source-line-no">113</span><span id="line-113">    }</span>
-<span class="source-line-no">114</span><span id="line-114">  }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">}</span>
+<span class="source-line-no">108</span><span id="line-108">  }</span>
+<span class="source-line-no">109</span><span id="line-109">};</span>
+<span class="source-line-no">110</span><span id="line-110">  OnChangeListener noiseListener = new OnChangeListener() {</span>
+<span class="source-line-no">111</span><span id="line-111">    @Override</span>
+<span class="source-line-no">112</span><span id="line-112">    public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {</span>
+<span class="source-line-no">113</span><span id="line-113"></span>
+<span class="source-line-no">114</span><span id="line-114">      float anglecoefficient = binding.noiseknob.getValue();</span>
+<span class="source-line-no">115</span><span id="line-115">      swarmViewModel.addnoise(binding.noiseknob.getValue());</span>
+<span class="source-line-no">116</span><span id="line-116">      binding.noisepicker.setRotation((anglecoefficient *900)-45);</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">        swarmViewModel.start();</span>
+<span class="source-line-no">119</span><span id="line-119"></span>
+<span class="source-line-no">120</span><span id="line-120">    }};</span>
+<span class="source-line-no">121</span><span id="line-121"></span>
+<span class="source-line-no">122</span><span id="line-122">  @Override</span>
+<span class="source-line-no">123</span><span id="line-123">  protected void onCreate(@Nullable Bundle savedInstanceState) {</span>
+<span class="source-line-no">124</span><span id="line-124"></span>
+<span class="source-line-no">125</span><span id="line-125">    super.onCreate(savedInstanceState);</span>
+<span class="source-line-no">126</span><span id="line-126">    binding = ActivityMainBinding.inflate(getLayoutInflater());</span>
+<span class="source-line-no">127</span><span id="line-127">    presetbinding = FragmentLoadPresetBinding.inflate(getLayoutInflater());</span>
+<span class="source-line-no">128</span><span id="line-128">    ViewModelProvider viewModelProvider = new ViewModelProvider(this);</span>
+<span class="source-line-no">129</span><span id="line-129">    swarmViewModel = viewModelProvider</span>
+<span class="source-line-no">130</span><span id="line-130">        .get(SwarmatronViewModel.class);</span>
+<span class="source-line-no">131</span><span id="line-131">    presetViewModel = viewModelProvider</span>
+<span class="source-line-no">132</span><span id="line-132">        .get(PresetViewModel.class);</span>
+<span class="source-line-no">133</span><span id="line-133">    presetViewModel.getPreset()</span>
+<span class="source-line-no">134</span><span id="line-134">            .observe(this, preset -&gt; {</span>
+<span class="source-line-no">135</span><span id="line-135">              Log.d(getClass().getSimpleName(), preset.toString());</span>
+<span class="source-line-no">136</span><span id="line-136">              binding.waveformknob.setValue(preset.getWaveFormSelection());</span>
+<span class="source-line-no">137</span><span id="line-137">              binding.spreadknob.setValue(preset.getSpreadKnobPosition());</span>
+<span class="source-line-no">138</span><span id="line-138">              binding.filterknob.setValue(preset.getFilterPosition());</span>
+<span class="source-line-no">139</span><span id="line-139">              binding.noiseknob.setValue(preset.getNoiseAmount());</span>
+<span class="source-line-no">140</span><span id="line-140">            });</span>
+<span class="source-line-no">141</span><span id="line-141"></span>
+<span class="source-line-no">142</span><span id="line-142">    setContentView(binding.getRoot());</span>
+<span class="source-line-no">143</span><span id="line-143">    getWindow().getDecorView().setSystemUiVisibility(</span>
+<span class="source-line-no">144</span><span id="line-144">        binding.getRoot().SYSTEM_UI_FLAG_HIDE_NAVIGATION|</span>
+<span class="source-line-no">145</span><span id="line-145">            binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);</span>
+<span class="source-line-no">146</span><span id="line-146">    binding.slider.addOnChangeListener(sliderlistener);</span>
+<span class="source-line-no">147</span><span id="line-147">    binding.slider.addOnSliderTouchListener(activateListener);</span>
+<span class="source-line-no">148</span><span id="line-148">    binding.spreadknob.addOnChangeListener(spreadlistener);</span>
+<span class="source-line-no">149</span><span id="line-149">binding.waveformknob.addOnChangeListener(waveformlistener);</span>
+<span class="source-line-no">150</span><span id="line-150">binding.filterknob.addOnChangeListener(filterListener);</span>
+<span class="source-line-no">151</span><span id="line-151">binding.noiseknob.addOnChangeListener(noiseListener);</span>
+<span class="source-line-no">152</span><span id="line-152"></span>
+<span class="source-line-no">153</span><span id="line-153">binding.filterknob.setValue(1000);</span>
+<span class="source-line-no">154</span><span id="line-154">binding.waveformpicker.setRotation(-60);</span>
+<span class="source-line-no">155</span><span id="line-155">binding.fiterpicker.setRotation(160);</span>
+<span class="source-line-no">156</span><span id="line-156">    FragmentManager manager = getSupportFragmentManager();</span>
+<span class="source-line-no">157</span><span id="line-157">presetFragment = new EditPresetFragment();</span>
+<span class="source-line-no">158</span><span id="line-158">loadPresetFragment = new LoadPresetFragment();</span>
+<span class="source-line-no">159</span><span id="line-159">    binding.testsave.setOnClickListener((v) -&gt; {</span>
+<span class="source-line-no">160</span><span id="line-160">      getWindow().getDecorView().setSystemUiVisibility(</span>
+<span class="source-line-no">161</span><span id="line-161">          binding.getRoot().SYSTEM_UI_FLAG_HIDE_NAVIGATION|</span>
+<span class="source-line-no">162</span><span id="line-162">              binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);</span>
+<span class="source-line-no">163</span><span id="line-163"></span>
+<span class="source-line-no">164</span><span id="line-164">      presetFragment.show(manager, "");</span>
+<span class="source-line-no">165</span><span id="line-165">     </span>
+<span class="source-line-no">166</span><span id="line-166"></span>
+<span class="source-line-no">167</span><span id="line-167">    });</span>
+<span class="source-line-no">168</span><span id="line-168"></span>
+<span class="source-line-no">169</span><span id="line-169">    binding.loadbutton.setOnClickListener((v) -&gt; loadPresetFragment.show(manager, ""));</span>
+<span class="source-line-no">170</span><span id="line-170">  }</span>
+<span class="source-line-no">171</span><span id="line-171"></span>
+<span class="source-line-no">172</span><span id="line-172"></span>
+<span class="source-line-no">173</span><span id="line-173"></span>
+<span class="source-line-no">174</span><span id="line-174">}</span>
 
 
 
