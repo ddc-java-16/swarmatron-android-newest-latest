@@ -90,8 +90,9 @@ swarmViewModel.stop();
 
 
 
-
+      if(active) {
         swarmViewModel.start();
+      }
 
     }};
 
@@ -103,7 +104,9 @@ float anglecoefficient = binding.filterknob.getValue() - 200;
     swarmViewModel.changeFilterCutoff(binding.filterknob.getValue());
   binding.fiterpicker.setRotation((float) (anglecoefficient* 0.18) - 45);
 
+    if(active) {
       swarmViewModel.start();
+    }
 
   }
 };
@@ -115,7 +118,9 @@ float anglecoefficient = binding.filterknob.getValue() - 200;
       swarmViewModel.addnoise(binding.noiseknob.getValue());
       binding.noisepicker.setRotation((anglecoefficient *900)-45);
 
+      if(active) {
         swarmViewModel.start();
+      }
 
     }};
 
@@ -162,6 +167,7 @@ loadPresetFragment = new LoadPresetFragment();
               binding.getRoot().SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 
       presetFragment.show(manager, "");
+
      
 
     });

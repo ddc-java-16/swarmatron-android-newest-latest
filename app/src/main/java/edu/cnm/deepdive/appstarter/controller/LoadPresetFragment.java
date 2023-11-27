@@ -42,6 +42,8 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
     binding.presetlist.setOnItemClickListener((parent, view, position, id) -> {
       preset = (Preset) parent.getItemAtPosition(position);
       view.setBackgroundColor(Color.GRAY);
+      dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+      dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(true);
     });
     dialog = new Builder(requireContext())
         .setTitle("Load Preset")
@@ -53,6 +55,7 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
         .setNegativeButton(R.string.delete, (dialog, id) ->
             viewModel.delete(preset))
         .create();
+
     return dialog;
   }
   @Nullable
@@ -60,6 +63,7 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
   public View onCreateView(@NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
+
     return binding.getRoot();
   }
   @Override
@@ -71,6 +75,10 @@ public class LoadPresetFragment extends DialogFragment implements LifecycleOwner
       binding.presetlist.setAdapter(
           new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1,
               presets));
+      dialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+      dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setEnabled(false);
     });
+
   }
+
 }
